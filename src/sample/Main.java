@@ -8,16 +8,20 @@ import javafx.stage.Stage;
 
 public class Main extends Application {
 
+    public static final int WIDTH = 640;
+    public static final int HEIGHT = 480;
+
+
     @Override
     public void start(Stage primaryStage) throws Exception{
         Parent root = FXMLLoader.load(getClass().getResource("sample.fxml"));
         primaryStage.setTitle("Epic Ray Tracer");
-        primaryStage.setScene(new Scene(root, 1280, 1024));
+        primaryStage.setScene(new Scene(root, WIDTH, HEIGHT));
         primaryStage.show();
     }
-
 
     public static void main(String[] args) {
         launch(args);
     }
+
 }
