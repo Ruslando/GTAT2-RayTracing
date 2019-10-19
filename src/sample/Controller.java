@@ -8,15 +8,22 @@ import javafx.scene.paint.Color;
 public class Controller {
 
     @FXML
-    private Canvas canvas;
+    public Canvas canvas;
 
-    private GraphicsContext gc;
+    public GraphicsContext gc;
 
-    public void drawShapeTest(){
 
-        canvas = new Canvas(Main.WIDTH, Main.HEIGHT);
-        gc.setStroke(Color.BLUE);
-        gc.setLineWidth(5);
-        gc.strokeLine(40,10,10,40);
+    @FXML
+    private void initialize(){
+        canvas.setWidth(Main.WIDTH);
+        canvas.setHeight(Main.HEIGHT);
+        gc = canvas.getGraphicsContext2D();
+        fillCanvas(gc);
     }
+
+    public void fillCanvas(GraphicsContext gc){
+        gc.setFill(Color.BLUE);
+        gc.fillRect(0,0,canvas.getWidth(), canvas.getHeight());
+    }
+
 }

@@ -13,6 +13,6 @@
       <RowConstraints />
    </rowConstraints>
    <children>
-      <Canvas fx:id="canvas" height="200.0" width="200.0" />
+      <Canvas fx:id="canvas" />
    </children>
 </GridPane>
