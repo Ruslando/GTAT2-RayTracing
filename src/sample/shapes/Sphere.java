@@ -35,7 +35,7 @@ public class Sphere implements Shape{
         double a = direction.vectorproduct(direction);
         Vector3 eyecenter = origin.subtract(center);
         double b = 2 * direction.vectorproduct(eyecenter);
-        double c = eyecenter.vectorproduct(eyecenter) * radius*radius;
+        double c = eyecenter.vectorproduct(eyecenter) - radius*radius;
 
         return new Intersection(a,b,c, this);
     }
