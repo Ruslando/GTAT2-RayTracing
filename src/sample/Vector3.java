@@ -26,6 +26,10 @@ public class Vector3 {
         return Math.sqrt(this.x * b.x + this.y * b.y + this.z * b.z);
     }
 
+    public double vectorproduct (Vector3 b){
+        return this.x * b.x + this.y * b.y + this.z * b.z;
+    }
+
     public Vector3 scalarmultiplication(double s){
         return new Vector3(s*this.x, s*this.y, s*this.z);
     }
@@ -46,5 +50,9 @@ public class Vector3 {
         return new Vector3(this.y * b.z - this.z * b.y,
                 this.z * b.x - this.x * b.z,
                 this.x *b.y - this.y * b.x);
+    }
+
+    public String toString(){
+        return "x: " + x + ", y: " + y + ", z: " + z;
     }
 }
