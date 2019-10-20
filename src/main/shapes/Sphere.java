@@ -1,8 +1,8 @@
-package sample.shapes;
+package main.shapes;
 
 import javafx.scene.paint.Color;
-import sample.Vector3;
-import util.Intersection;
+import main.util.Vector3;
+import main.util.Intersection;
 
 public class Sphere implements Shape{
 
@@ -31,7 +31,12 @@ public class Sphere implements Shape{
     }
 
     @Override
+    /**
+     * Returns a data type "Intersection" which gives information about possible intersections of the ray with the
+     * object.
+     */
     public Intersection intersect(Vector3 origin, Vector3 direction) {
+        /* Dividing up the ray and the circle for use for the abc-formula*/
         double a = direction.vectorproduct(direction);
         Vector3 eyecenter = origin.subtract(center);
         double b = 2 * direction.vectorproduct(eyecenter);

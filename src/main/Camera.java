@@ -1,4 +1,6 @@
-package sample;
+package main;
+
+import main.util.Vector3;
 
 public class Camera {
 
@@ -26,6 +28,23 @@ public class Camera {
         this.roll = 0;
         this.worldposition = new Vector3(0,0,-10);
         this.lookat = new Vector3(0.0, 0.0, 1);
+        this.UP = new Vector3(0,1,0);
+
+        this.view = lookat.subtract(worldposition).normalize();
+        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
+
+        this.W = worldposition.subtract(view).normalize();
+        this.U = UPRotated.cross(view).normalize();
+        this.V = U.cross(W).normalize();
+
+        d = t/Math.tan(Math.PI/4)/2;
+        W_d_negated = W.scalarmultiplication(d*-1);
+    }
+
+    public Camera(Vector3 position, Vector3 lookat){
+        this.roll = 0;
+        this.worldposition = position;
+        this.lookat = lookat;
         this.UP = new Vector3(0,1,0);
 
         this.view = lookat.subtract(worldposition).normalize();

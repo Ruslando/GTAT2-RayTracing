@@ -1,6 +1,6 @@
-package sample;
+package main;
 
-import sample.shapes.Shape;
+import main.shapes.Shape;
 
 import java.util.ArrayList;
 

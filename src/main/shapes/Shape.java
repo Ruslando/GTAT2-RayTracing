@@ -1,8 +1,8 @@
-package sample.shapes;
+package main.shapes;
 
 import javafx.scene.paint.Color;
-import sample.Vector3;
-import util.Intersection;
+import main.util.Vector3;
+import main.util.Intersection;
 
 public interface Shape {
 

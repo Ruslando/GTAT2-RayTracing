@@ -1,13 +1,14 @@
-package sample;
+package main;
 
 import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import javafx.scene.paint.Color;
-import sample.shapes.Sphere;
+import main.shapes.Sphere;
+import main.util.Vector3;
 
-public class Output {
+public class OutputController {
 
     @FXML
     public Canvas canvas;
@@ -21,10 +22,10 @@ public class Output {
         canvas.setHeight(Main.HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        Camera camera = new Camera();
+        Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,1));
 
         Scene scene = new Scene();
-        scene.addShape(new Sphere(5, new Vector3 (0,0,0), Color.GREEN));
+        scene.addShape(new Sphere(1, new Vector3(0,0,0), Color.GREEN));
 
         RayTracer rt = new RayTracer(camera, scene, this);
         rt.trace();

@@ -1,4 +1,4 @@
-package sample;
+package main.util;
 
 public class Vector3 {
 
