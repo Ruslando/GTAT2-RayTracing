@@ -25,7 +25,7 @@ public class RayTracer {
 
                 //Takes into consideration current camera-axis vectors. W_d_negates is current screen ratio.
                 Vector3 s = camera.getU().scalarmultiplication(u)
-                        .add(camera.getUP().scalarmultiplication(v))
+                        .add(camera.getV().scalarmultiplication(v))
                         .add(camera.getW_d_negated());
 
                 Vector3 tracedir = s.normalize();

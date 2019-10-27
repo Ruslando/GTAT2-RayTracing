@@ -30,15 +30,7 @@ public class Camera {
         this.lookat = new Vector3(0.0, 0.0, 1);
         this.UP = new Vector3(0,1,0);
 
-        this.view = lookat.subtract(worldposition).normalize();
-        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
-
-        this.W = worldposition.subtract(view).normalize();
-        this.U = UPRotated.cross(view).normalize();
-        this.V = U.cross(W).normalize();
-
-        d = t/Math.tan(Math.PI/4)/2;
-        W_d_negated = W.scalarmultiplication(d*-1);
+        setup();
     }
 
     public Camera(Vector3 position, Vector3 lookat){
@@ -47,19 +39,23 @@ public class Camera {
         this.lookat = lookat;
         this.UP = new Vector3(0,1,0);
 
-        this.view = lookat.subtract(worldposition).normalize();
-        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
-
-        this.W = worldposition.subtract(view).normalize();
-        this.U = UPRotated.cross(view).normalize();
-        this.V = U.cross(W).normalize();
-
-        d = t/Math.tan(Math.PI/4)/2;
-        W_d_negated = W.scalarmultiplication(d*-1);
+        setup();
     }
 
     // GETTERS AND SETTERS
 
+    private void setup(){
+        this.view = lookat.subtract(worldposition).normalize();
+        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
+
+        this.W = worldposition.subtract(lookat).normalize();
+        this.U = UPRotated.cross(view).normalize();
+        this.V = view.cross(U).normalize();
+
+
+        d = t/Math.tan(Math.PI/4)/2;
+        W_d_negated = W.scalarmultiplication(d*-1);
+    }
 
     public int getL() {
         return l;
