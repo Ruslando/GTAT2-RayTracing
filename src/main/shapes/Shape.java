@@ -3,6 +3,7 @@ package main.shapes;
 import javafx.scene.paint.Color;
 import main.util.Vector3;
 import main.util.Intersection;
+import main.util.Material;
 
 public interface Shape {
 
@@ -10,6 +11,6 @@ public interface Shape {
 
     Vector3 getCenter();
 
-    Color getColor();
+    Material getMaterial();
 
 }

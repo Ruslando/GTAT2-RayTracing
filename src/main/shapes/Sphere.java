@@ -3,17 +3,18 @@ package main.shapes;
 import javafx.scene.paint.Color;
 import main.util.Vector3;
 import main.util.Intersection;
+import main.util.Material;
 
 public class Sphere implements Shape{
 
     double radius;
     Vector3 center;
-    Color localcolor;
+    Material material;
 
-    public Sphere(double radius, Vector3 center, Color color){
+    public Sphere(double radius, Vector3 center, Material material){
         this.radius = radius;
         this.center = center;
-        this.localcolor = color;
+        this.material = material;
     }
 
     public double getRadius() {
@@ -26,8 +27,8 @@ public class Sphere implements Shape{
     }
 
     @Override
-    public Color getColor(){
-        return localcolor;
+    public Material getMaterial(){
+        return material;
     }
 
     @Override

@@ -51,12 +51,7 @@ public class Intersection {
         }
         else if(intersections == 2){
             result = Math.min(x1, x2);
-            if(result < 0) {
-                result = x2;
-                if (result < 0) {
-                    result = Double.MAX_VALUE;
-                }
-            }
+            return result;
         }
 
         return result;

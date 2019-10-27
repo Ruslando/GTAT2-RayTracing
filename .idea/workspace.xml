@@ -3,11 +3,23 @@
   <component name="ChangeListManager">
     <list default="true" id="cdb932d9-7e58-4d94-93a9-e7b232ef17da" name="Default" comment="">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Camera.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Camera.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Light.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Light.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Scene.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Scene.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Shape.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Shape.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Intersection.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Util.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Util.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Camera.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Camera.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Light.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Light.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/OutputController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/OutputController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RayTracer.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Scene.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/shapes/Shape.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Shape.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/shapes/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Sphere.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/Intersection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Intersection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Vector3.java" afterDir="false" />
@@ -70,7 +82,7 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/Main.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="204">
+            <state relative-caret-position="272">
               <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
               <folding>
                 <element signature="imports" expanded="true" />
@@ -80,10 +92,27 @@
         </entry>
       </file>
       <file pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/Light.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state>
+              <caret column="13" lean-forward="true" selection-start-column="13" selection-end-column="13" />
+              <folding>
+                <element signature="e#441#442#0" expanded="true" />
+                <element signature="e#472#473#0" expanded="true" />
+                <element signature="e#578#579#0" expanded="true" />
+                <element signature="e#611#612#0" expanded="true" />
+                <element signature="e#642#643#0" expanded="true" />
+                <element signature="e#668#669#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/OutputController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="408">
-              <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+            <state relative-caret-position="340">
+              <caret line="28" column="85" selection-start-line="28" selection-start-column="85" selection-end-line="28" selection-end-column="85" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,8 +123,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/Camera.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="380">
-              <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+            <state relative-caret-position="-11">
+              <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
             </state>
           </provider>
         </entry>
@@ -103,11 +132,16 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/util/Vector3.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="816">
-              <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+            <state relative-caret-position="329">
+              <caret line="29" column="58" lean-forward="true" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="58" />
               <folding>
                 <element signature="e#562#563#0" expanded="true" />
                 <element signature="e#627#628#0" expanded="true" />
+                <element signature="e#673#674#0" expanded="true" />
+                <element signature="e#741#742#0" expanded="true" />
+                <element signature="e#724#725#0" expanded="true" />
+                <element signature="e#788#789#0" expanded="true" />
+                <element signature="e#1404#1405#0" expanded="true" />
                 <element signature="e#1428#1429#0" expanded="true" />
                 <element signature="e#1456#1457#0" expanded="true" />
                 <element signature="e#1480#1481#0" expanded="true" />
@@ -121,29 +155,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/RayTracer.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="527">
-              <caret line="33" selection-start-line="33" selection-end-line="33" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/Scene.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="255">
-              <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
-              <folding>
-                <element signature="imports" expanded="true" />
-              </folding>
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/src/main/shapes/Sphere.java">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="544">
-              <caret line="38" column="80" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
+            <state relative-caret-position="561">
+              <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -154,8 +167,8 @@
       <file pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/util/Intersection.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-45">
-              <caret column="18" selection-start-column="18" selection-end-column="18" />
+            <state relative-caret-position="561">
+              <caret line="53" column="26" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
             </state>
           </provider>
         </entry>
@@ -193,13 +206,16 @@
         <option value="$PROJECT_DIR$/src/sample/shapes/Sphere.java" />
         <option value="$PROJECT_DIR$/src/sample/Camera.java" />
         <option value="$PROJECT_DIR$/src/main/Main.java" />
-        <option value="$PROJECT_DIR$/src/main/RayTracer.java" />
-        <option value="$PROJECT_DIR$/src/main/Light.java" />
         <option value="$PROJECT_DIR$/src/main/Camera.java" />
+        <option value="$PROJECT_DIR$/src/main/Light.java" />
+        <option value="$PROJECT_DIR$/src/main/shapes/Sphere.java" />
+        <option value="$PROJECT_DIR$/src/main/shapes/Shape.java" />
+        <option value="$PROJECT_DIR$/src/main/util/Material.java" />
         <option value="$PROJECT_DIR$/src/main/util/Vector3.java" />
+        <option value="$PROJECT_DIR$/src/main/Scene.java" />
+        <option value="$PROJECT_DIR$/src/main/RayTracer.java" />
         <option value="$PROJECT_DIR$/src/main/util/Intersection.java" />
         <option value="$PROJECT_DIR$/src/main/OutputController.java" />
-        <option value="$PROJECT_DIR$/src/main/shapes/Sphere.java" />
       </list>
     </option>
   </component>
@@ -220,7 +236,6 @@
       <foldersAlwaysOnTop value="true" />
     </navigator>
     <panes>
-      <pane id="Scope" />
       <pane id="ProjectPane">
         <subPane>
           <expand>
@@ -239,10 +254,25 @@
               <item name="src" type="462c0819:PsiDirectoryNode" />
               <item name="main" type="462c0819:PsiDirectoryNode" />
             </path>
+            <path>
+              <item name="GTAT2-RayTracing" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GTAT2-RayTracing" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="shapes" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="GTAT2-RayTracing" type="b2602c69:ProjectViewProjectNode" />
+              <item name="GTAT2-RayTracing" type="462c0819:PsiDirectoryNode" />
+              <item name="src" type="462c0819:PsiDirectoryNode" />
+              <item name="main" type="462c0819:PsiDirectoryNode" />
+              <item name="util" type="462c0819:PsiDirectoryNode" />
+            </path>
           </expand>
           <select />
         </subPane>
       </pane>
+      <pane id="Scope" />
       <pane id="PackagesPane" />
     </panes>
   </component>
@@ -256,7 +286,7 @@
     <property name="OverrideImplement.combined" value="false" />
     <property name="WebServerToolWindowFactoryState" value="false" />
     <property name="aspect.path.notification.shown" value="true" />
-    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1571843692866" />
+    <property name="com.android.tools.idea.instantapp.provision.ProvisionBeforeRunTaskProvider.myTimeStamp" value="1572186488856" />
     <property name="dynamic.classpath" value="false" />
     <property name="last_opened_file_path" value="$PROJECT_DIR$" />
     <property name="recentsLimit" value="5" />
@@ -364,18 +394,18 @@
       <workItem from="1571837999493" duration="5673000" />
       <workItem from="1571860706914" duration="2386000" />
       <workItem from="1572038080757" duration="3569000" />
-      <workItem from="1572170400115" duration="223000" />
+      <workItem from="1572170400115" duration="13456000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61915000" />
+    <option name="totallyTimeSpent" value="75148000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="-7" y="-7" width="2015" height="1308" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" weight="0.43441764" />
+      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" weight="0.4342711" />
       <window_info id="Structure" order="1" weight="0.32874617" />
       <window_info id="Favorites" order="2" weight="0.1590604" />
       <window_info id="Designer" order="3" />
@@ -385,7 +415,7 @@
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32993197" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.32363012" />
+      <window_info active="true" anchor="bottom" id="Run" order="3" visible="true" weight="0.32312927" />
       <window_info anchor="bottom" id="Debug" order="4" weight="0.28767124" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
@@ -396,7 +426,7 @@
       <window_info anchor="bottom" id="Changes" order="11" />
       <window_info anchor="bottom" id="Profiler" order="12" />
       <window_info anchor="bottom" id="Event Log" order="13" />
-      <window_info anchor="bottom" id="Messages" order="14" weight="0.32907802" />
+      <window_info anchor="bottom" id="Messages" order="14" weight="0.3282313" />
       <window_info anchor="bottom" id="Database Changes" order="15" show_stripe_button="false" />
       <window_info anchor="bottom" id="Terminal" order="16" />
       <window_info anchor="right" id="Maven" order="0" />
@@ -412,7 +442,7 @@
       <window_info anchor="right" id="Theme Preview" order="10" />
     </layout>
     <layout-to-restore>
-      <window_info content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.43441764" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" sideWeight="0.6703755" visible="true" weight="0.4342711" />
       <window_info id="Structure" order="1" weight="0.32874617" />
       <window_info id="Favorites" order="2" weight="0.1590604" />
       <window_info id="Designer" order="3" />
@@ -422,8 +452,8 @@
       <window_info anchor="bottom" id="Docker" order="0" show_stripe_button="false" />
       <window_info anchor="bottom" id="Message" order="1" />
       <window_info anchor="bottom" id="Find" order="2" weight="0.32993197" />
-      <window_info anchor="bottom" id="Run" order="3" weight="0.3239796" />
-      <window_info anchor="bottom" id="Debug" order="4" weight="0.28794327" />
+      <window_info anchor="bottom" id="Run" order="3" visible="true" weight="0.32312927" />
+      <window_info anchor="bottom" id="Debug" order="4" weight="0.28767124" />
       <window_info anchor="bottom" id="Cvs" order="5" weight="0.25" />
       <window_info anchor="bottom" id="Inspection" order="6" weight="0.4" />
       <window_info anchor="bottom" id="TODO" order="7" />
@@ -495,27 +525,10 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Light.java">
+    <entry file="file://$PROJECT_DIR$/src/main/shapes/Sphere.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="119">
-          <caret line="7" selection-start-line="7" selection-end-line="7" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/shapes/Shape.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="136">
-          <caret line="8" column="17" selection-start-line="8" selection-start-column="17" selection-end-line="8" selection-end-column="17" />
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="204">
-          <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+          <caret line="7" column="13" selection-start-line="7" selection-start-column="13" selection-end-line="7" selection-end-column="13" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
@@ -524,28 +537,82 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/Scene.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="21" column="1" selection-start-line="21" selection-start-column="1" selection-end-line="21" selection-end-column="1" />
+        <state relative-caret-position="238">
+          <caret line="14" column="35" selection-start-line="14" selection-start-column="35" selection-end-line="14" selection-end-column="35" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/RayTracer.java">
+    <entry file="file://$PROJECT_DIR$/src/main/shapes/Shape.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="527">
-          <caret line="33" selection-start-line="33" selection-end-line="33" />
+        <state relative-caret-position="119">
+          <caret line="7" column="17" selection-start-line="7" selection-start-column="17" selection-end-line="7" selection-end-column="17" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/util/Material.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="85">
+          <caret line="6" column="33" selection-start-line="6" selection-start-column="33" selection-end-line="6" selection-end-column="33" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Light.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="13" lean-forward="true" selection-start-column="13" selection-end-column="13" />
+          <folding>
+            <element signature="e#441#442#0" expanded="true" />
+            <element signature="e#472#473#0" expanded="true" />
+            <element signature="e#578#579#0" expanded="true" />
+            <element signature="e#611#612#0" expanded="true" />
+            <element signature="e#642#643#0" expanded="true" />
+            <element signature="e#668#669#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Main.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="272">
+          <caret line="16" column="58" selection-start-line="16" selection-start-column="58" selection-end-line="16" selection-end-column="58" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="jar://C:/Program Files/Java/jdk1.8.0_191/src.zip!/java/lang/Math.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="257">
+          <caret line="1392" column="25" selection-start-line="1392" selection-start-column="25" selection-end-line="1392" selection-end-column="25" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/Camera.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="-11">
+          <caret line="24" lean-forward="true" selection-start-line="24" selection-end-line="24" />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/util/Vector3.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="816">
-          <caret line="58" column="26" selection-start-line="58" selection-start-column="26" selection-end-line="58" selection-end-column="26" />
+        <state relative-caret-position="329">
+          <caret line="29" column="58" lean-forward="true" selection-start-line="29" selection-start-column="58" selection-end-line="29" selection-end-column="58" />
           <folding>
             <element signature="e#562#563#0" expanded="true" />
             <element signature="e#627#628#0" expanded="true" />
+            <element signature="e#673#674#0" expanded="true" />
+            <element signature="e#741#742#0" expanded="true" />
+            <element signature="e#724#725#0" expanded="true" />
+            <element signature="e#788#789#0" expanded="true" />
+            <element signature="e#1404#1405#0" expanded="true" />
             <element signature="e#1428#1429#0" expanded="true" />
             <element signature="e#1456#1457#0" expanded="true" />
             <element signature="e#1480#1481#0" expanded="true" />
@@ -555,34 +622,27 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/Camera.java">
+    <entry file="file://$PROJECT_DIR$/src/main/util/Intersection.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="380">
-          <caret line="47" column="30" selection-start-line="47" selection-start-column="30" selection-end-line="47" selection-end-column="30" />
+        <state relative-caret-position="561">
+          <caret line="53" column="26" selection-start-line="53" selection-start-column="26" selection-end-line="53" selection-end-column="26" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/OutputController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/RayTracer.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="408">
-          <caret line="24" column="48" selection-start-line="24" selection-start-column="48" selection-end-line="24" selection-end-column="48" />
+        <state relative-caret-position="561">
+          <caret line="73" column="38" selection-start-line="73" selection-start-column="38" selection-end-line="73" selection-end-column="38" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/util/Intersection.java">
+    <entry file="file://$PROJECT_DIR$/src/main/OutputController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="-45">
-          <caret column="18" selection-start-column="18" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/shapes/Sphere.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="544">
-          <caret line="38" column="80" selection-start-line="38" selection-start-column="80" selection-end-line="38" selection-end-column="80" />
+        <state relative-caret-position="340">
+          <caret line="28" column="85" selection-start-line="28" selection-start-column="85" selection-end-line="28" selection-end-column="85" />
           <folding>
             <element signature="imports" expanded="true" />
           </folding>
