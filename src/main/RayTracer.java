@@ -19,16 +19,8 @@ public class RayTracer {
     public void trace() {
         for (int i = 0; i < Main.HEIGHT; i++){      //Loop every pixel
             for(int j = 0; j < Main.WIDTH; j++){
-                /* Calculates ray-vector. Get shot from screen-center*/
-                double u = camera.getL() + (camera.getR() - camera.getL()) * (j + 0.5) / Main.WIDTH;
-                double v = camera.getT() + (camera.getB() - camera.getT()) * (i + 0.5) / Main.HEIGHT;
 
-                //Takes into consideration current camera-axis vectors. W_d_negates is current screen ratio.
-                Vector3 s = camera.getU().scalarmultiplication(u)
-                        .add(camera.getUP().scalarmultiplication(v))
-                        .add(camera.getW_d_negated());
-
-                Vector3 tracedir = s.normalize();
+                Vector3 tracedir = camera.getRayDirection(j, i);
 
 
                 Intersection intersection = null;

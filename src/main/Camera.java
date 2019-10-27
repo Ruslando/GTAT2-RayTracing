@@ -4,104 +4,63 @@ import main.util.Vector3;
 
 public class Camera {
 
-    private int l = -Main.WIDTH /  2;
-    private int b = -Main.HEIGHT / 2;
-    private int r = l * -1;
-    private int t = b * -1;
-
     private Vector3 worldposition;
     private Vector3 lookat;
     private Vector3 view;
 
-    private Vector3 UPRotated;
     private Vector3 UP;
     private Vector3 U;
     private Vector3 W;
     private Vector3 V;
     private double roll;
+    private double cameraangle;
 
-    private double d;
-    private Vector3 W_d_negated;
 
 
     public Camera(){
         this.roll = 0;
         this.worldposition = new Vector3(0,0,-10);
         this.lookat = new Vector3(0.0, 0.0, 1);
-        this.UP = new Vector3(0,1,0);
 
-        this.view = lookat.subtract(worldposition).normalize();
-        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
-
-        this.W = worldposition.subtract(view).normalize();
-        this.U = UPRotated.cross(view).normalize();
-        this.V = U.cross(W).normalize();
-
-        d = t/Math.tan(Math.PI/4)/2;
-        W_d_negated = W.scalarmultiplication(d*-1);
+        setup();
     }
 
     public Camera(Vector3 position, Vector3 lookat){
         this.roll = 0;
         this.worldposition = position;
         this.lookat = lookat;
-        this.UP = new Vector3(0,1,0);
+        cameraangle = Math.PI / 4;
 
-        this.view = lookat.subtract(worldposition).normalize();
-        this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
-
-        this.W = worldposition.subtract(view).normalize();
-        this.U = UPRotated.cross(view).normalize();
-        this.V = U.cross(W).normalize();
-
-        d = t/Math.tan(Math.PI/4)/2;
-        W_d_negated = W.scalarmultiplication(d*-1);
+        setup();
     }
 
     // GETTERS AND SETTERS
 
+    private void setup(){
+        this.view = lookat.subtract(worldposition).normalize();
+        this.UP = new Vector3(Math.sin(roll), Math.cos(roll), 0);
 
-    public int getL() {
-        return l;
+        this.W = view.scalarmultiplication(1.0 / view.magnitude())
+                .scalarmultiplication(-1.0);
+        this.U = UP.cross(W).scalarmultiplication(1.0 /  UP.cross(W).magnitude()).scalarmultiplication(-1);
+        this.V = W.cross(U).normalize();
     }
 
-    public int getT() {
-        return t;
+    public Vector3 getRayDirection(int x, int y){
+        double s = (Main.HEIGHT / 2.0) / Math.tan(cameraangle / 2.0);
+        double left = x - ((Main.WIDTH ) / 2.0);
+        double top =  y - ((Main.HEIGHT) / 2.0);
+
+        Vector3 r = this.W.scalarmultiplication(-1.0)
+                .scalarmultiplication(s)
+                .add(this.U.scalarmultiplication(left))
+                .add(this.V.scalarmultiplication(top));
+
+        return r.normalize();
     }
 
-    public int getR() {
-        return r;
-    }
-
-    public int getB() {
-        return b;
-    }
 
     public Vector3 getWorldposition() {
         return worldposition;
-    }
-
-    public Vector3 getView() {
-        return view;
-    }
-
-    public Vector3 getUP() {
-        return UP;
-    }
-
-    public Vector3 getU() {
-        return U;
-    }
-
-    public Vector3 getV() {
-        return V;
-    }
-
-    public Vector3 getW() {
-        return W;
-    }
-
-    public Vector3 getW_d_negated() {
-        return W_d_negated;
     }
 }
