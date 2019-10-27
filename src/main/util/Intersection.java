@@ -21,18 +21,16 @@ public class Intersection {
         this.shape = shape;
 
         // If discriminante is negative, the formula will not work. There are no intersections.
-        double discriminante = b*b - 4*a*c;
-        if(discriminante < 0){
-            intersections = 0;
-        }
-        else if(discriminante == 0){    // There is exactly one intersection if the discriminante is exactly 0.
-            x1 = -b / 2*a;
+        if(a == 0){    // There is exactly one intersection if the discriminante is exactly 0.
+            x1 = -c/b;
             intersections = 1;
         }
-        else if (discriminante > 0){    // There are two intersections.
+        else {    // There are two intersections.
             intersections = 2;
-            x1 = -b - Math.sqrt(discriminante) / 2*a;
-            x2 = -b + Math.sqrt(discriminante) / 2*a;
+            double plusOrMinus = (b < 0) ? -1 : 1;
+            double k = (-b -  plusOrMinus * Math.sqrt((b*b - 4*a*c)))/2;
+            x1 = c/k;
+            x2 = k/a;
         }
 
     }

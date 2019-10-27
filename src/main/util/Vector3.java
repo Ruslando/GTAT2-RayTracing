@@ -55,4 +55,16 @@ public class Vector3 {
     public String toString(){
         return "x: " + x + ", y: " + y + ", z: " + z;
     }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
+    }
 }

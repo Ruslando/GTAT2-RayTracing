@@ -44,10 +44,10 @@ public class Camera {
     public Camera(Vector3 position, Vector3 lookat){
         this.roll = 0;
         this.worldposition = position;
-        this.lookat = lookat;
+        this.lookat = lookat; // Punkt, der fokussiert wird
         this.UP = new Vector3(0,1,0);
 
-        this.view = lookat.subtract(worldposition).normalize();
+        this.view = lookat.subtract(worldposition).normalize(); // Blickrichtung
         this.UPRotated = new Vector3(Math.sin(roll), Math.cos(roll), 0);
 
         this.W = worldposition.subtract(view).normalize();
