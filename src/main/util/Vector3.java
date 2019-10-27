@@ -55,4 +55,8 @@ public class Vector3 {
     public String toString(){
         return "x: " + x + ", y: " + y + ", z: " + z;
     }
+
+    public double magnitude(){
+        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
+    }
 }
