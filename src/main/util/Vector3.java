@@ -30,6 +30,10 @@ public class Vector3 {
         return this.x * b.x + this.y * b.y + this.z * b.z;
     }
 
+    public Vector3 multiply(Vector3 v) {
+        return new Vector3(this.x*v.x, this.y*v.y,this.z*v.z);
+    }
+
     public Vector3 scalarmultiplication(double s){
         return new Vector3(s*this.x, s*this.y, s*this.z);
     }
@@ -54,6 +58,18 @@ public class Vector3 {
 
     public String toString(){
         return "x: " + x + ", y: " + y + ", z: " + z;
+    }
+
+    public double getX() {
+        return x;
+    }
+
+    public double getY() {
+        return y;
+    }
+
+    public double getZ() {
+        return z;
     }
 
     public double magnitude(){

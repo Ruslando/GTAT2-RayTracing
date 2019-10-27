@@ -1,6 +1,7 @@
 package main;
 
 import main.shapes.Shape;
+import main.shapes.Sphere;
 import main.util.Intersection;
 import main.util.Vector3;
 
@@ -40,7 +41,45 @@ public class RayTracer {
 
                 /* Currently takes the shape color and draws it on the canvas*/
                 if(intersection != null){
-                    output.writePixel(j,i, intersection.getShape().getColor());
+                    int argb;
+                    int red = 0;
+                    int green = 0;
+                    int blue = 0;
+
+                    // Berechnung der Schnittpunktkoordinaten
+                    Vector3 point = (tracedir.scalarmultiplication(distance)).add(camera.getWorldposition()).normalize();
+
+                    // Überprüfung, ob Kugel oder nicht Kugel, muss eingebaut werden
+                    Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
+                    double radius = ((Sphere)intersection.getShape()).getRadius();
+                    Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1./radius);
+
+                    for(Light l : scene.getLights()) {
+                        // Direction of the light
+                        Vector3 r = point.subtract(l.getPosition()).normalize();
+                        Vector3 nTimesMinusR = normal.multiply(r.scalarmultiplication(-1));
+                        if((nTimesMinusR.getX() < 0) && (nTimesMinusR.getY() < 0)&& (nTimesMinusR.getZ() < 0)) {
+                            nTimesMinusR = new Vector3(0,0,0);
+                        }
+                        double brightness = l.getBrightness();
+                        Vector3 lightColor = l.getRgb();
+                        Vector3 albedo = intersection.getShape().getMaterial().getMaterial();
+                        Vector3 outputColor = nTimesMinusR.multiply(lightColor).scalarmultiplication(brightness).multiply(albedo);
+                        red += (int) outputColor.getX();
+                        green += (int) outputColor.getY();
+                        blue += (int) outputColor.getZ();
+                    }
+
+                    if(red > 255) red = 255;
+                    if(green > 255) green = 255;
+                    if(blue > 255) blue = 255;
+                    if(red < 0) red = 0;
+                    if(green < 0) green = 0;
+                    if(blue < 0) blue = 0;
+
+                    argb = (0xff << 24) | (red << 16)| (green << 8) | blue;
+                    output.writePixel(j,i, argb);
+
                 }
             }
         }
