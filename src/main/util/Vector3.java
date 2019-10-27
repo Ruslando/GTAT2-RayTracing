@@ -71,4 +71,8 @@ public class Vector3 {
     public double getZ() {
         return z;
     }
+
+    public double magnitude(){
+        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
+    }
 }
