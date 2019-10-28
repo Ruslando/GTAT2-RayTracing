@@ -52,12 +52,12 @@ public class RayTracer {
                     // Überprüfung, ob Kugel oder nicht Kugel, muss eingebaut werden
                     Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
                     double radius = ((Sphere)intersection.getShape()).getRadius();
-                    Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1./radius);
+                    //Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1./radius);
 
                     for(Light l : scene.getLights()) {
                         // Direction of the light
                         Vector3 r = point.subtract(l.getPosition()).normalize();
-                        double nTimesMinusR = normal.scalar(r.scalarmultiplication(-1));
+                        double nTimesMinusR = point.scalar(r.scalarmultiplication(-1));
                         if((nTimesMinusR < 0)) {
                             nTimesMinusR = 0;
                         }

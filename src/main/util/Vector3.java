@@ -30,6 +30,10 @@ public class Vector3 {
         return this.x * b.x + this.y * b.y + this.z * b.z;
     }
 
+    public Vector3 orthogonal(){
+        return new Vector3(this.z, this.y, this.x * -1);
+    }
+
     public Vector3 multiply(Vector3 v) {
         return new Vector3(this.x*v.x, this.y*v.y,this.z*v.z);
     }

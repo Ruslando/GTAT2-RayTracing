@@ -40,16 +40,15 @@ public class Camera {
         this.view = lookat.subtract(worldposition).normalize();
         this.UP = new Vector3(Math.sin(roll), Math.cos(roll), 0);
 
-        this.W = view.scalarmultiplication(1.0 / view.magnitude())
-                .scalarmultiplication(-1.0);
-        this.U = UP.cross(W).scalarmultiplication(1.0 /  UP.cross(W).magnitude()).scalarmultiplication(-1);
-        this.V = W.cross(U).normalize();
+        this.W = view.scalarmultiplication(-1.0).normalize();
+        this.U = W.cross(UP).normalize();
+        this.V = U.cross(W).normalize();
     }
 
     public Vector3 getRayDirection(int x, int y){
         double s = (Main.HEIGHT / 2.0) / Math.tan(cameraangle / 2.0);
         double left = x - ((Main.WIDTH ) / 2.0);
-        double top =  y - ((Main.HEIGHT) / 2.0);
+        double top =  ((Main.HEIGHT) / 2.0) - y;
 
         Vector3 r = this.W.scalarmultiplication(-1.0)
                 .scalarmultiplication(s)
