@@ -66,6 +66,12 @@ public class RayTracer {
                         Vector3 albedo = intersection.getShape().getMaterial().getMaterial();
                         Vector3 outputColor = lightColor.scalarmultiplication(brightness * nTimesMinusR).multiply(albedo);
                         // Vector3 outputColor = nTimesMinusR.multiply(lightColor).scalarmultiplication(brightness).multiply(albedo);
+                        if(l.getQuadraticDecay()) {
+                            double pointToLightDistance = Math.sqrt(Math.pow(point.getX() - l.getPosition().getX(), 2.) +
+                                    Math.pow(point.getY() - l.getPosition().getY(), 2.) +
+                                    Math.pow(point.getZ() - l.getPosition().getZ(), 2.));
+                                    outputColor = outputColor.scalarmultiplication(1/Math.pow(pointToLightDistance,2));
+                        }
                         red += (int) outputColor.getX();
                         green += (int) outputColor.getY();
                         blue += (int) outputColor.getZ();
