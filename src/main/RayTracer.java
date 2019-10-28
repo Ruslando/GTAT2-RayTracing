@@ -57,14 +57,15 @@ public class RayTracer {
                     for(Light l : scene.getLights()) {
                         // Direction of the light
                         Vector3 r = point.subtract(l.getPosition()).normalize();
-                        Vector3 nTimesMinusR = normal.multiply(r.scalarmultiplication(-1));
-                        if((nTimesMinusR.getX() < 0) && (nTimesMinusR.getY() < 0)&& (nTimesMinusR.getZ() < 0)) {
-                            nTimesMinusR = new Vector3(0,0,0);
+                        double nTimesMinusR = normal.scalar(r.scalarmultiplication(-1));
+                        if((nTimesMinusR < 0)) {
+                            nTimesMinusR = 0;
                         }
                         double brightness = l.getBrightness();
                         Vector3 lightColor = l.getRgb();
                         Vector3 albedo = intersection.getShape().getMaterial().getMaterial();
-                        Vector3 outputColor = nTimesMinusR.multiply(lightColor).scalarmultiplication(brightness).multiply(albedo);
+                        Vector3 outputColor = lightColor.scalarmultiplication(brightness * nTimesMinusR).multiply(albedo);
+                        // Vector3 outputColor = nTimesMinusR.multiply(lightColor).scalarmultiplication(brightness).multiply(albedo);
                         red += (int) outputColor.getX();
                         green += (int) outputColor.getY();
                         blue += (int) outputColor.getZ();
