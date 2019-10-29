@@ -21,6 +21,7 @@ public class Camera {
         this.roll = 0;
         this.worldposition = new Vector3(0,0,-10);
         this.lookat = new Vector3(0.0, 0.0, 1);
+        cameraangle = Math.PI / 4;
 
         setup();
     }

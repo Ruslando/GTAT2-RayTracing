@@ -1,7 +1,6 @@
 package main;
 
 import main.shapes.Shape;
-import main.shapes.Sphere;
 import main.util.Intersection;
 import main.util.Vector3;
 
@@ -50,8 +49,8 @@ public class RayTracer {
                     Vector3 point = (tracedir.scalarmultiplication(distance)).add(camera.getWorldposition()).normalize();
 
                     // Überprüfung, ob Kugel oder nicht Kugel, muss eingebaut werden
-                    Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
-                    double radius = ((Sphere)intersection.getShape()).getRadius();
+                    //Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
+                    //double radius = ((Sphere)intersection.getShape()).getRadius();
                     //Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1./radius);
 
                     for(Light l : scene.getLights()) {
@@ -63,9 +62,9 @@ public class RayTracer {
                         }
                         double brightness = l.getBrightness();
                         Vector3 lightColor = l.getRgb();
-                        Vector3 albedo = intersection.getShape().getMaterial().getMaterial();
+                        Vector3 albedo = intersection.getShape().getMaterial().getAlbedo();
                         Vector3 outputColor = lightColor.scalarmultiplication(brightness * nTimesMinusR).multiply(albedo);
-                        // Vector3 outputColor = nTimesMinusR.multiply(lightColor).scalarmultiplication(brightness).multiply(albedo);
+
                         if(l.getQuadraticDecay()) {
                             double pointToLightDistance = Math.sqrt(Math.pow(point.getX() - l.getPosition().getX(), 2.) +
                                     Math.pow(point.getY() - l.getPosition().getY(), 2.) +

@@ -22,12 +22,12 @@ public class OutputController {
         canvas.setHeight(Main.HEIGHT);
         gc = canvas.getGraphicsContext2D();
 
-        Camera camera = new Camera(new Vector3(0,10,-10), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,0));
 
         Scene scene = new Scene();
         scene.addShape(new Sphere(2, new Vector3(0,0,0), new Material(new Vector3(0,1,0))));
-        scene.addShape(new Sphere(0.5, new Vector3(5,3,1), new Material(new Vector3(0,1,0))));
-        scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
+        scene.addShape(new Sphere(4, new Vector3(0,0,4), new Material(new Vector3(0,1,0))));
+        //scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
         scene.addLight(new Light(new Vector3(0,10,-10), 100, new Vector3(255,255,255), true));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 

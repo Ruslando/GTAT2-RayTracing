@@ -1,6 +1,5 @@
 package main.shapes;
 
-import javafx.scene.paint.Color;
 import main.util.Vector3;
 import main.util.Intersection;
 import main.util.Material;

@@ -2,9 +2,9 @@ package main.util;
 
 public class Vector3 {
 
-    double x;
-    double y;
-    double z;
+    private double x;
+    private double y;
+    private double z;
 
     public Vector3(double x, double y, double z){
         this.x = x;
@@ -28,10 +28,6 @@ public class Vector3 {
 
     public double vectorproduct (Vector3 b){
         return this.x * b.x + this.y * b.y + this.z * b.z;
-    }
-
-    public Vector3 orthogonal(){
-        return new Vector3(this.z, this.y, this.x * -1);
     }
 
     public Vector3 multiply(Vector3 v) {
@@ -79,4 +75,6 @@ public class Vector3 {
     public double magnitude(){
         return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
     }
+
+
 }
