@@ -28,7 +28,7 @@ public class OutputController {
         scene.addShape(new Sphere(2, new Vector3(0,0,0), new Material(new Vector3(0,1,0))));
         scene.addShape(new Sphere(4, new Vector3(0,0,4), new Material(new Vector3(0,1,0))));
         //scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
-        scene.addLight(new Light(new Vector3(0,10,-10), 100, new Vector3(255,255,255), true));
+        scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 
         RayTracer rt = new RayTracer(camera, scene, this);
