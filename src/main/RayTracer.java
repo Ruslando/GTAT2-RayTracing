@@ -1,5 +1,6 @@
 package main;
 
+import main.shapes.Quadric;
 import main.shapes.Shape;
 import main.shapes.Sphere;
 import main.util.Intersection;
@@ -50,9 +51,11 @@ public class RayTracer {
                     Vector3 point = (tracedir.scalarmultiplication(distance)).add(camera.getWorldposition());
 
                     // Überprüfung, ob Kugel oder nicht Kugel, muss eingebaut werden
-                    Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
-                    double radius = ((Sphere)intersection.getShape()).getRadius();
-                    Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1.0/radius);
+                    // Vector3 sphereCenter = ((Sphere)intersection.getShape()).getCenter();
+                    // double radius = ((Sphere)intersection.getShape()).getRadius();
+                    // Vector3 normal = point.subtract(sphereCenter).scalarmultiplication(1.0/radius);
+                    Quadric q = (Quadric) intersection.getShape();
+                    Vector3 normal = q.getNormal(point);
 
                     for(Light l : scene.getLights()) {
                         // Direction of the light
