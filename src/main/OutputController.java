@@ -7,6 +7,7 @@ import javafx.scene.image.PixelWriter;
 import main.shapes.Quadric;
 import main.shapes.Sphere;
 import main.util.Material;
+import main.util.Matrix4;
 import main.util.Vector3;
 
 public class OutputController {
@@ -22,6 +23,16 @@ public class OutputController {
         canvas.setWidth(Main.WIDTH);
         canvas.setHeight(Main.HEIGHT);
         gc = canvas.getGraphicsContext2D();
+
+        double[][] testinput = new double[4][4];
+        testinput[0][0] = 1;
+        testinput[1][0] = 1;
+        testinput[2][0] = 1;
+        testinput[3][0] = 1;
+
+        Matrix4 test = new Matrix4(testinput);
+        Matrix4 testTransposed = test.getTransposed();
+
 
         Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,0));
 
