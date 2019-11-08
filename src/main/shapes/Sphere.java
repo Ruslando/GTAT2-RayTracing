@@ -19,7 +19,6 @@ public class Sphere implements Shape{
         return radius;
     }
 
-    @Override
     public Vector3 getCenter() {
         return center;
     }

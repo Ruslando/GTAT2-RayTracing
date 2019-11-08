@@ -1,12 +1,38 @@
 package main.util;
 
-import java.util.ArrayList;
 
 public class Matrix4 {
     private double[][] mat;
 
+    public Matrix4(){
+        mat = new double[4][4];
+    }
+
     public Matrix4(double[][] mat) {
         this.mat = mat;
+    }
+
+    public Matrix4(double a, double b, double c, double d, double e, double f,
+                   double g, double h, double i, double j, double k, double l,
+                   double m, double n, double o, double p){
+        mat = new double[4][4];
+
+        mat[0][0] = a;
+        mat[0][1] = b;
+        mat[0][2] = c;
+        mat[0][3] = d;
+        mat[1][0] = e;
+        mat[1][1] = f;
+        mat[1][2] = g;
+        mat[1][3] = h;
+        mat[2][0] = i;
+        mat[2][1] = j;
+        mat[2][2] = k;
+        mat[2][3] = l;
+        mat[3][0] = m;
+        mat[3][1] = n;
+        mat[3][2] = o;
+        mat[3][3] = p;
     }
 
     public Matrix4 getQuadricMatrix(double a, double b, double c, double d, double e, double f, double g, double h, double i, double j) {
@@ -28,6 +54,7 @@ public class Matrix4 {
         quadricMatrix[3][2] = i;
         quadricMatrix[3][3] = j;
 
+        this.mat = quadricMatrix;
         return new Matrix4(quadricMatrix);
     }
 
@@ -39,5 +66,29 @@ public class Matrix4 {
             }
         }
         return new Matrix4(transposed);
+    }
+
+    public double[][] getMatrixArray(){
+        return mat;
+    }
+
+    public Matrix4 multiply(Matrix4 matrix4){
+        double[][] matrix = matrix4.getMatrixArray();
+
+        double[][] returnMatrix = new double[4][4];
+        if(matrix.length != 4){
+            System.out.println("Kann nicht ausgeführt werden. Spaltenanzahl =/= Zeilenanzahl.");
+        }
+        else{
+            for (int i = 0; i < 4; i++) { // aRow
+                for (int j = 0; j < 4; j++) { // bColumn
+                    for (int k = 0; k < 4; k++) { // aColumn
+                        returnMatrix[i][j] += mat[i][k] * matrix[k][j];
+                    }
+                }
+            }
+        }
+
+        return new Matrix4(returnMatrix);
     }
 }

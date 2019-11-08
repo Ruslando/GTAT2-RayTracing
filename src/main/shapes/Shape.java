@@ -8,8 +8,6 @@ public interface Shape {
 
     Intersection intersect(Vector3 origin, Vector3 direction);
 
-    Vector3 getCenter();
-
     Material getMaterial();
 
 }
