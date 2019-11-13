@@ -4,6 +4,7 @@ import main.shapes.Quadric;
 import main.shapes.Shape;
 import main.shapes.Sphere;
 import main.util.Intersection;
+import main.util.Material;
 import main.util.Vector3;
 
 public class RayTracer {
@@ -73,6 +74,21 @@ public class RayTracer {
                         red += (int) outputColor.getX();
                         green += (int) outputColor.getY();
                         blue += (int) outputColor.getZ();
+
+                        // neues Beleuchtungsmodell
+                        Material mat = intersection.getShape().getMaterial();
+                        double roughness = mat.getRoughness();
+                        Vector3 view = tracedir.scalarmultiplication(-1);
+                        Vector3 L = point.subtract(l.getPosition()).normalize();
+                        double kd = (1-0.04) * (1 - ((Material) mat).getMetalness());
+                        Vector3 H = view.add(L).scalarmultiplication(0.5).normalize();
+                        double D = (roughness * roughness)/Math.PI*Math.pow(((normal.scalar(H) * normal.scalar(H) * (roughness * roughness - 1) + 1)), 2);
+                        // F0 + (1 – F0)(1 – N·V)5
+                        double F = 0.04 + Math.pow((1 - 0.04) * (1 - normal.scalar(view)), 5);
+                        // (N·V(1 – r/2) + r/2) * N·L / (N·L(1 – r/2) + r/2)
+                        double G = normal.scalar(view) / ((normal.scalar(view) * (1 - roughness / 2) + roughness / 2)
+                        * normal.scalar(L) / (normal.scalar(L) * (1 - roughness / 2) + roughness / 2));
+
                     }
 
                     if(red > 255) red = 255;
