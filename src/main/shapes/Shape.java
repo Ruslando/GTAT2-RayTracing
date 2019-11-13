@@ -10,4 +10,11 @@ public interface Shape {
 
     Material getMaterial();
 
+    Vector3 getNormal(Vector3 point);
+
+    void translate(double x, double y, double z);
+
+    void rotate(double phi);
+
+    void scale(double x, double y, double z);
 }

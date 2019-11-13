@@ -4,10 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
-import main.shapes.Quadric;
-import main.shapes.QuadricSphere;
-import main.shapes.Sphere;
-import main.shapes.Zylinder;
+import main.shapes.*;
 import main.util.Material;
 import main.util.Matrix4;
 import main.util.Vector3;
@@ -36,17 +33,26 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(5,5,-10), new Vector3(0,0,0));
 
-        Quadric sphere = new QuadricSphere();
+        // Quadric sphere = new QuadricSphere();
         Quadric zylinder = new Zylinder(1);
+        Quadric zylinder2 = new CustomQuadric(1,0,1,0,0,0,0,0,0,Math.sqrt(1) * -1, new Material(new Vector3(1,  0, 0)));
+        Vereinigung v = new Vereinigung(zylinder, zylinder2);
+        Quadric zylinder3 = new CustomQuadric(1,1,0,0,0,0,0,0,0,Math.sqrt(1) * -1, new Material(new Vector3(1,  0, 0)));
+        Vereinigung v2 = new Vereinigung(v, zylinder3);
+
+
+
+        //Differenz v = new Differenz(zylinder, sphere);
 
         Scene scene = new Scene();
         //scene.addShape(new Sphere(2, new Vector3(0,0,0), new Material(new Vector3(0,1,0))));
         //scene.addShape(new Sphere(4, new Vector3(0,0,4), new Material(new Vector3(0,1,0))));
         //scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
-        scene.addShape(zylinder);
-        scene.addLight(new Light(new Vector3(0,0,-100), 1, new Vector3(255,255,255), false));
+        //scene.addShape(sphere);
+        scene.addShape(v2);
+        scene.addLight(new Light(new Vector3(0,100,-100), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 
         RayTracer rt = new RayTracer(camera, scene, this);

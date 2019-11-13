@@ -50,6 +50,7 @@ public abstract class Quadric implements Shape{
         return this.material;
     }
 
+    @Override
     public Vector3 getNormal(Vector3 point) {
         double[][] mat = quadricMatrix.getMatrixArray();
 
@@ -64,16 +65,14 @@ public abstract class Quadric implements Shape{
         return normal;
     }
 
-    public Quadric translate(double x, double y, double z){
+    public void translate(double x, double y, double z){
         Matrix4 translationMatrix = new Matrix4(1,0,0,x*-1,0,1,0,y*-1,0,0,1,z*-1,0
                 ,0,0,1);
 
         quadricMatrix = translationMatrix.getTransposed().multiply(quadricMatrix).multiply(translationMatrix);
-
-        return this;
     }
 
-    public Quadric rotate(double phi){
+    public void rotate(double phi){
         double angle = Math.toRadians(phi) * -1;
         Matrix4 rotationMatrix = new Matrix4(Math.cos(angle), -Math.sin(angle), 0, 0,
                 Math.sin(angle), Math.cos(angle), 0,0,
@@ -81,16 +80,12 @@ public abstract class Quadric implements Shape{
                 0,0,0,1);
 
         quadricMatrix = rotationMatrix.getTransposed().multiply(quadricMatrix).multiply(rotationMatrix);
-
-        return this;
     }
 
-    public Quadric scale(double x, double y, double z){
+    public void scale(double x, double y, double z){
         Matrix4 scaleMatrix = new Matrix4(1/x, 0,0,0,0,
                 1/ y,0,0,0,0,1/z,0,0,0,0, 1);
 
         quadricMatrix = scaleMatrix.getTransposed().multiply(quadricMatrix).multiply(scaleMatrix);
-
-        return this;
     }
 }

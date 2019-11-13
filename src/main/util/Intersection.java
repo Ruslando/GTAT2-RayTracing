@@ -3,11 +3,11 @@ package main.util;
 import main.shapes.Shape;
 
 public class Intersection {
-    private int intersections;
-    private Shape shape;
+    public int intersections;
+    public Shape shape;
 
-    private double x1;
-    private double x2;
+    public double x1;
+    public double x2;
 
     /** Calculates the abc formula and returns the result as a Intersection data type.
      *
@@ -21,7 +21,12 @@ public class Intersection {
         this.shape = shape;
 
         // If discriminante is negative, the formula will not work. There are no intersections.
-        if(a == 0){    // There is exactly one intersection if the discriminante is exactly 0.
+        if(a < 0 || (4*a*c > b*b)) {
+            x1 = Double.MAX_VALUE;
+            x2 = Double.MAX_VALUE;
+            intersections = 0;
+        }
+        else if(a == 0){    // There is exactly one intersection if the discriminante is exactly 0.
             x1 = -c/b;
             intersections = 1;
         }
