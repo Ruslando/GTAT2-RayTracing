@@ -8,8 +8,13 @@ public interface Shape {
 
     Intersection intersect(Vector3 origin, Vector3 direction);
 
-    Vector3 getCenter();
-
     Material getMaterial();
 
+    Vector3 getNormal(Vector3 point);
+
+    void translate(double x, double y, double z);
+
+    void rotate(double phi);
+
+    void scale(double x, double y, double z);
 }

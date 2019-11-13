@@ -19,7 +19,6 @@ public class Sphere implements Shape{
         return radius;
     }
 
-    @Override
     public Vector3 getCenter() {
         return center;
     }
@@ -43,5 +42,25 @@ public class Sphere implements Shape{
         double c = eyecenter.vectorproduct(eyecenter) - radius*radius;
 
         return new Intersection(a,b,c, this);
+    }
+
+    @Override
+    public Vector3 getNormal(Vector3 point) {
+        return point.subtract(center).scalarmultiplication(1.0/radius);
+    }
+
+    @Override
+    public void translate(double x, double y, double z) {
+
+    }
+
+    @Override
+    public void rotate(double phi) {
+
+    }
+
+    @Override
+    public void scale(double x, double y, double z) {
+
     }
 }
