@@ -89,13 +89,8 @@ public class RayTracer {
                         double ks = D * F * G;
                         double kd = (1-0.04) * (1 - metalness); // alternativ für 0.04 ks benutzen
 
-                        // Like this because vector3 doesnt have add with double only other vectors
+                        Vector3 outputColor = lightColor.multiply(albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L))).addGamma();
 
-                        double rc = lightColor.getX() * (kd * albedo.getX() + ks) * (brightness * (normal.scalar(L)));
-                        double gc = lightColor.getY() * (kd * albedo.getY() + ks) * (brightness * (normal.scalar(L)));
-                        double bc = lightColor.getZ() * (kd * albedo.getZ() + ks) * (brightness * (normal.scalar(L)));
-
-                        Vector3 outputColor = new Vector3(rc,gc,bc).addGamma();
 
                         red += (int) outputColor.getX();
                         green += (int) outputColor.getY();

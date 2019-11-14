@@ -34,9 +34,10 @@ public class OutputController {
 
 
         Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,0));
-        Material material = new Material(new Vector3(0,1,0), 0.2, 0.7);
+        Material material = new Material(new Vector3(0,1,0), 0.2, 0.9);
 
-        Shape sphere = new Sphere(1, new Vector3(0,0,0) , material);
+        Shape sphere = new Sphere(2, new Vector3(0,0,0) , material);
+        //Shape sphere = new QuadricSphere(material);
 
         /*Quadric zylinder = new Zylinder(1);
         Quadric zylinder2 = new CustomQuadric(1,0,1,0,0,0,0,0,0,Math.sqrt(1) * -1, material);
