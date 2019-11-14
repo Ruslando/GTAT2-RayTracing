@@ -33,14 +33,16 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(5,5,-10), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(0,0,-10), new Vector3(0,0,0));
+        Material material = new Material(new Vector3(0,1,0), 0.2, 0.7);
 
-        // Quadric sphere = new QuadricSphere();
-        Quadric zylinder = new Zylinder(1);
-        Quadric zylinder2 = new CustomQuadric(1,0,1,0,0,0,0,0,0,Math.sqrt(1) * -1, new Material(new Vector3(1,  0, 0)));
+        Shape sphere = new Sphere(1, new Vector3(0,0,0) , material);
+
+        /*Quadric zylinder = new Zylinder(1);
+        Quadric zylinder2 = new CustomQuadric(1,0,1,0,0,0,0,0,0,Math.sqrt(1) * -1, material);
         Vereinigung v = new Vereinigung(zylinder, zylinder2);
-        Quadric zylinder3 = new CustomQuadric(1,1,0,0,0,0,0,0,0,Math.sqrt(1) * -1, new Material(new Vector3(1,  0, 0)));
-        Vereinigung v2 = new Vereinigung(v, zylinder3);
+        Quadric zylinder3 = new CustomQuadric(1,1,0,0,0,0,0,0,0,Math.sqrt(1) * -1, material);
+        Vereinigung v2 = new Vereinigung(v, zylinder3);*/
 
 
 
@@ -51,7 +53,7 @@ public class OutputController {
         //scene.addShape(new Sphere(4, new Vector3(0,0,4), new Material(new Vector3(0,1,0))));
         //scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
         //scene.addShape(sphere);
-        scene.addShape(v2);
+        scene.addShape(sphere);
         scene.addLight(new Light(new Vector3(0,100,-100), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 
