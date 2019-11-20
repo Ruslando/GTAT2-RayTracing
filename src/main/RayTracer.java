@@ -83,10 +83,12 @@ public class RayTracer {
                         Vector3 L = l.getPosition().subtract(point).normalize(); //l.getPosition().subtract(point).normalize();
                         Vector3 H = V.add(L).scalarmultiplication(0.5).normalize();
                         double D = (roughness * roughness) / (Math.PI * Math.pow(((normal.scalar(H) * normal.scalar(H)) * (roughness * roughness - 1) + 1), 2));
-                        double F = 0.04 + (1 - 0.04) * Math.pow((1 - normal.scalar(V)), 5);
+                        Vector3 FNull = albedo.scalarmultiplication((1 - metalness) * 0.04 + metalness);
+                        //Vector3 F = 0.04 + (1 - 0.04) * Math.pow((1 - normal.scalar(V)), 5);
+                        Vector3 F = FNull.add(new Vector3(1,1,1).add(FNull.scalarmultiplication(-1)).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
                         double G = normal.scalar(V) / ((normal.scalar(V) * (1 - (roughness / 2)) + (roughness / 2))
                         * normal.scalar(L) / (normal.scalar(L) * (1 - (roughness / 2)) + (roughness / 2)));
-                        double ks = D * F * G;
+                        Vector3 ks = F.scalarmultiplication(D * G);
                         double kd = (1-0.04) * (1 - metalness); // alternativ für 0.04 ks benutzen
 
                         Vector3 outputColor = lightColor.multiply(albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L))).addGamma();
