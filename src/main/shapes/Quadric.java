@@ -31,13 +31,13 @@ public abstract class Quadric implements Shape{
                 mat[0][2] * (px * vz + vx * pz) + mat[1][2] * (py * vz + vy * pz) + mat[0][3] * vx + mat[1][3] * vy + mat[2][3] * vz);
         double C = 2 * (mat[1][0] * px * py + mat[0][2] * px * pz + mat[1][2] * py * pz + mat[0][3] * px + mat[1][3] * py * mat[2][3] * pz) +
                 mat[0][0] * px * px + mat[1][1] * py * py + mat[2][2] * pz * pz + mat[3][3];
-
-        /*double A = a * vx * vx + b * vy * vy + c * vz * vz + 2 * (d * vx * vy + e * vx * vz + f * vy * vz);
+        /*
+        double A = a * vx * vx + b * vy * vy + c * vz * vz + 2 * (d * vx * vy + e * vx * vz + f * vy * vz);
         double B = 2 * (a * px * vx + b * py * vy + c * pz * vz + d * (px * vy + vx * py) +
                 e * (px * vz + vx * pz) + f * (py * vz + vy * pz) + g * vx + h * vy + i * vz);
         double C = 2 * (d * px * py + e * px * pz + f * py * pz + g * px + h * py * i * pz) +
-                a * px * px + b * py * py + c * pz * pz + j;*/
-
+                a * px * px + b * py * py + c * pz * pz + j;
+        */
         return new Intersection(A, B, C, this);
     }
 
@@ -58,10 +58,10 @@ public abstract class Quadric implements Shape{
         double y = point.getY();
         double z = point.getZ();
 
-        Vector3 normal = new Vector3(mat[0][0]*x + mat[1][1]*y + mat[0][2]*z + mat[0][3], mat[1][1] * y + mat[0][1]
-                * x + mat[2][1] * z + mat[1][3], mat[2][2] * z + mat[2][0] * x + mat[1][2] * y + mat[2][3]);
+        Vector3 normal = new Vector3(mat[0][0]*x + mat[0][1]*y + mat[0][2]*z + mat[3][0], mat[1][1] * y + mat[0][1]
+                * x + mat[1][2] * z + mat[3][1], mat[2][2] * z + mat[2][0] * x + mat[1][2] * y + mat[2][3]);
 
-        normal.normalize();
+        normal = normal.normalize();
         return normal;
     }
 
