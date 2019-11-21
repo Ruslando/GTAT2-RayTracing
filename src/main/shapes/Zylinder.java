@@ -1,6 +1,6 @@
 package main.shapes;
 
-import main.util.Material;
+import main.shader.Material;
 import main.util.Vector3;
 
 public class Zylinder extends Quadric {

@@ -1,7 +1,7 @@
 package main.shapes;
 
 import main.util.Intersection;
-import main.util.Material;
+import main.shader.Material;
 import main.util.Vector3;
 
 public class Vereinigung implements Shape{

@@ -2,7 +2,7 @@ package main.shapes;
 
 import main.util.Vector3;
 import main.util.Intersection;
-import main.util.Material;
+import main.shader.Material;
 
 public interface Shape {
 

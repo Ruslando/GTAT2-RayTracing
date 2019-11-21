@@ -5,7 +5,7 @@ import javafx.scene.canvas.Canvas;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.image.PixelWriter;
 import main.shapes.*;
-import main.util.Material;
+import main.shader.Material;
 import main.util.Matrix4;
 import main.util.Vector3;
 

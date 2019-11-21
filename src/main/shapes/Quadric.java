@@ -1,7 +1,7 @@
 package main.shapes;
 
 import main.util.Intersection;
-import main.util.Material;
+import main.shader.Material;
 import main.util.Matrix4;
 import main.util.Vector3;
 

@@ -1,6 +1,6 @@
 package main.shapes;
 
-import main.util.Material;
+import main.shader.Material;
 
 public class CustomQuadric extends Quadric {
 

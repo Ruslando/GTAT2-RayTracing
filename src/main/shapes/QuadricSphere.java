@@ -1,7 +1,6 @@
 package main.shapes;
 
-import main.util.Material;
-import main.util.Vector3;
+import main.shader.Material;
 
 public class QuadricSphere extends Quadric {
 
