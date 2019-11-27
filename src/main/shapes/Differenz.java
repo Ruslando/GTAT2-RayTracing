@@ -22,24 +22,27 @@ public class Differenz implements Shape {
         double[] intersections = new double[4];
         Intersection i1 = a.intersect(origin, direction);
         Intersection i2 = b.intersect(origin, direction);
-        if(i1.intersections == 2 && i2.intersections == 2) {
             intersections[0] = i1.x1;
             intersections[1] = i1.x2;
             intersections[2] = i2.x1;
             intersections[3] = i2.x2;
             Arrays.sort(intersections);
             if(intersections[0] == i1.x1) {
+                i1.intersections = 1;
                 return i1;
             }
             else if(intersections[0] == i2.x1 ) {
-                if(intersections[1] == i1.x1 && intersections[2] == i2.x2) {
+                if(intersections[1] == i1.x1 && intersections[2] == i1.x2) {
+                    i2.intersections = 1;
+                    i2.x1 = i2.x2;
                     return i2;
                 }
                 else if(intersections[1] == i2.x2) {
+                    i1.intersections = 1;
                     return i1;
                 }
             }
-        }
+
         return new Intersection(0,0,0, i1.shape);
     }
 
