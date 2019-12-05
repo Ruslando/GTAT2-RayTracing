@@ -10,16 +10,33 @@ public class Material {
     private Vector3 albedo;
     private double roughness;
     private double metalness;
+    private double refractionIndex;
+
+    private boolean isTransparent;
 
     public Material(Vector3 material, double roughness, double metalness) {
         this.albedo = material.removeGamma();
         this.roughness = roughness;
         this.metalness = metalness;
+
+        isTransparent = false;
+        refractionIndex = 0;
+    }
+
+    public Material(Vector3 material, double roughness, double metalness, double refractionIndex) {
+        this.albedo = material.removeGamma();
+        this.roughness = roughness;
+        this.metalness = metalness;
+
+        isTransparent = true;
+        this.refractionIndex = refractionIndex;
     }
 
     public Vector3 getAlbedo() { return this.albedo; }
     public double getRoughness() { return this.roughness; }
     public double getMetalness() { return this.metalness;}
+    public double getRefractionIndex() {return this.refractionIndex;}
+    public boolean isTransparent(){return this.isTransparent;}
 
     public Vector3 getOutputColor(Ray ray, ArrayList<Light> lights){
 
