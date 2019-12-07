@@ -17,7 +17,7 @@ public class Ray {
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, List<Shape> shapes){
         this.startingPoint = startingPoint;
-        this.rayDirection = raydirection.normalize();
+        this.rayDirection = raydirection;
         this.shapes = shapes;
     }
 
@@ -62,6 +62,10 @@ public class Ray {
 
     public Shape getShape(){
         return intersection.getShape();
+    }
+
+    public List<Shape> getShapes(){
+        return shapes;
     }
 
     /*public Vector3 getIntersectionPoint(Intersection intersection){
