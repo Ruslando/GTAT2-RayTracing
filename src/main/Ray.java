@@ -17,7 +17,7 @@ public class Ray {
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, List<Shape> shapes){
         this.startingPoint = startingPoint;
-        this.rayDirection = raydirection.normalize();
+        this.rayDirection = raydirection;
         this.shapes = shapes;
     }
 
@@ -31,7 +31,7 @@ public class Ray {
         for(Shape s: shapes){
             Intersection inter = s.intersect(startingPoint, rayDirection);
 
-            if(inter.getNearestIntersection() < distance){
+            if(inter.getNearestIntersection() < distance && inter.getNearestIntersection() >= 0){
                 distance = inter.getNearestIntersection();
                 intersection = inter;
             }
@@ -62,6 +62,10 @@ public class Ray {
 
     public Shape getShape(){
         return intersection.getShape();
+    }
+
+    public List<Shape> getShapes(){
+        return shapes;
     }
 
     /*public Vector3 getIntersectionPoint(Intersection intersection){
