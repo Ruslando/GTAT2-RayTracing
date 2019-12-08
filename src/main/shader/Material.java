@@ -28,12 +28,12 @@ public class Material {
         Vector3 normal = ray.getShape().getNormal(intersection);
 
         for(Light light : lights){
-            Vector3 shadowRayStartPosition = intersection.add(normal);
-            Vector3 shadowRayDirection = light.getPosition().subtract(intersection.add(normal)).normalize();
+            Vector3 shadowRayStartPosition = intersection.add(normal.scalarmultiplication(0.001));
+            Vector3 shadowRayDirection = light.getPosition().subtract(intersection.add(normal.scalarmultiplication(0.1))).normalize();
             Ray shadowRay = new Ray(shadowRayStartPosition, shadowRayDirection, ray.getShapes());
             shadowRay.shootRay();
             if(shadowRay.hasIntersected()) {
-                System.out.println("x");
+
             }
             else {
                 double brightness = light.getBrightness();

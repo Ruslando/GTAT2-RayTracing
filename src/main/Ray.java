@@ -31,7 +31,7 @@ public class Ray {
         for(Shape s: shapes){
             Intersection inter = s.intersect(startingPoint, rayDirection);
 
-            if(inter.getNearestIntersection() < distance){
+            if(inter.getNearestIntersection() < distance && inter.getNearestIntersection() >= 0){
                 distance = inter.getNearestIntersection();
                 intersection = inter;
             }
