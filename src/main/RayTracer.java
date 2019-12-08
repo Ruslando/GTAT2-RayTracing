@@ -24,7 +24,7 @@ public class RayTracer {
                 Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene.getScene());
                 ray.shootRay();
                 if(ray.hasIntersected()){
-                    Vector3 outputColor = ray.getShape().getMaterial().getOutputColor(ray, scene.getLights());
+                    Vector3 outputColor = ray.getShape().getMaterial().getOutputColor(ray, scene.getLights(), 0);
 
                     argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
                     output.writePixel(j,i, argb);
