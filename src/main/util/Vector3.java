@@ -95,5 +95,13 @@ public class Vector3 {
         return new Vector3(Math.sqrt(this.x), Math.sqrt(this.y), Math.sqrt(this.z));
     }
 
+    public Vector3 clamp(double min, double max){
+        return new Vector3(Math.max(min, Math.min(this.x, max)), Math.max(min, Math.min(this.y, max)), Math.max(min, Math.min(this.z, max)));
+    }
+
+    public Vector3 normalizedToColor(){
+        return new Vector3(this.x * 255, this.y * 255, this.z * 255);
+    }
+
 
 }

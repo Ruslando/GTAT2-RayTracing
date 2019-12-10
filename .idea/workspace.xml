@@ -6,17 +6,12 @@
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Scene.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Scene.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/OutputController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/OutputController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RayTracer.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/Scene.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Scene.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/shader/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shader/Material.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/shapes/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/shapes/Zylinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Zylinder.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Vector3.java" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -254,6 +249,7 @@
       <workItem from="1575904057637" duration="15965000" />
       <workItem from="1575922825779" duration="8889000" />
       <workItem from="1575975974590" duration="7632000" />
+      <workItem from="1576000400688" duration="10353000" />
     </task>
     <servers />
   </component>
@@ -282,42 +278,42 @@
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
     <state width="378" height="466" key="DebuggerActiveHint/0.0.1920.1040@0.0.1920.1040" timestamp="1575737331110" />
-    <state width="1877" height="84" key="GridCell.Tab.0.bottom" timestamp="1575983655073">
+    <state width="1877" height="162" key="GridCell.Tab.0.bottom" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="84" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1575983655073" />
-    <state width="1877" height="84" key="GridCell.Tab.0.center" timestamp="1575983655073">
+    <state width="1877" height="162" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.0.center" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="84" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1575983655073" />
-    <state width="1877" height="84" key="GridCell.Tab.0.left" timestamp="1575983655072">
+    <state width="1877" height="162" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.0.left" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="84" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1575983655072" />
-    <state width="1877" height="84" key="GridCell.Tab.0.right" timestamp="1575983655073">
+    <state width="1877" height="162" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.0.right" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="84" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1575983655073" />
-    <state width="1877" height="401" key="GridCell.Tab.1.bottom" timestamp="1575983412839">
+    <state width="1877" height="162" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.1.bottom" timestamp="1576014816284">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1575983412839" />
-    <state width="1877" height="401" key="GridCell.Tab.1.center" timestamp="1575983412838">
+    <state width="1877" height="162" key="GridCell.Tab.1.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816284" />
+    <state width="1877" height="162" key="GridCell.Tab.1.center" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1575983412838" />
-    <state width="1877" height="401" key="GridCell.Tab.1.left" timestamp="1575983412838">
+    <state width="1877" height="162" key="GridCell.Tab.1.center/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.1.left" timestamp="1576014816283">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1575983412838" />
-    <state width="1877" height="401" key="GridCell.Tab.1.right" timestamp="1575983412838">
+    <state width="1877" height="162" key="GridCell.Tab.1.left/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816283" />
+    <state width="1877" height="162" key="GridCell.Tab.1.right" timestamp="1576014816284">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state width="1877" height="401" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1575983412838" />
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1575975996831">
+    <state width="1877" height="162" key="GridCell.Tab.1.right/0.0.1920.1040@0.0.1920.1040" timestamp="1576014816284" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog" timestamp="1576002760564">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
-    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1575975996831" />
+    <state x="656" y="343" key="com.intellij.ide.util.TipDialog/0.0.1920.1040@0.0.1920.1040" timestamp="1576002760564" />
     <state x="1011" y="230" width="672" height="678" key="search.everywhere.popup" timestamp="1575914402576">
       <screen x="0" y="0" width="1920" height="1040" />
     </state>
@@ -332,9 +328,9 @@
           <option name="timeStamp" value="16" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/Ray.java</url>
-          <line>57</line>
-          <option name="timeStamp" value="82" />
+          <url>file://$PROJECT_DIR$/src/main/RayTracer.java</url>
+          <line>21</line>
+          <option name="timeStamp" value="108" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

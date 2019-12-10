@@ -33,12 +33,12 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(20,10,-30), new Vector3(0,0,0));
-        Material standardMaterial = new Material(new Vector3(0,1,0), .2, 0, 0);
-        Material reflectiveMaterial = new Material(new Vector3(1,0,0), 0.1, 0.7, 0.1);
+        Camera camera = new Camera(new Vector3(5,0,-15), new Vector3(0,0,0));
+        Material standardMaterial = new Material(new Vector3(1,0,0), .2, 0, 0);
+        Material reflectiveMaterial = new Material(new Vector3(0,1,0), 0.1, 0.1, 0.7);
 
         Shape sphere = new Sphere(2, new Vector3(0,0,0) , reflectiveMaterial);
-        Shape sphere2 = new Sphere(2, new Vector3(0,0,10) , standardMaterial);
+        Shape sphere2 = new Sphere(2, new Vector3(4,0,0) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 
         /*Quadric zylinder = new Zylinder(1);

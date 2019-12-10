@@ -13,17 +13,18 @@ public class Ray {
     private Vector3 outputColor;
     private Intersection intersection;
 
-    private double energy;
     private int recursionStep;
     private int maxRecursionDepth;
 
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, double energy, int recursionStep, int maxRecursionDepth){
+    private Shape ignoreSelf;
+
+    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, Shape ignoreShape, int recursionStep, int maxRecursionDepth){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection.normalize();
         this.scene = scene;
         this.recursionStep = recursionStep;
         this.maxRecursionDepth = maxRecursionDepth;
-        this.energy = energy;
+        this.ignoreSelf = ignoreShape;
     }
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene){
@@ -32,7 +33,7 @@ public class Ray {
         this.scene = scene;
         this.recursionStep = 1;
         this.maxRecursionDepth = 4;
-        this.energy = 1;
+        this.ignoreSelf = null;
     }
 
     /*
@@ -46,46 +47,23 @@ public class Ray {
         // If something is hit, it will calculate its local color.
         if(intersection != null) {
 
-            if(getShape().getMaterial().isReflective()){
-                Vector3 reflectiveColor = null;
-                double reflectivity = getShape().getMaterial().getReflectivity();
+            outputColor = getShape().getMaterial().getLocalColor(this, scene.getLights());
 
-                if(recursionStep <= maxRecursionDepth){
-                    if (energy > reflectivity){
-
-                        Vector3 result = shootReflectiveRay(energy * reflectivity);
-                        if (result != null) {
-                            reflectiveColor = result;
-                        }
-                        else{
-                            System.out.println("no reflection");
-                        }
-
-                        // Calculates new albedo and change the albedo from reflectiveColor if it exists.
-                        if(reflectiveColor != null){
-                            Vector3 objectAlbedo = getShape().getMaterial().getAlbedo();
-                            Vector3 newAlbedo = objectAlbedo.scalarmultiplication(1 - reflectivity).add(reflectiveColor.scalarmultiplication(reflectivity));  // maybe remove gammes statement
-                            getShape().getMaterial().setAlbedo(newAlbedo);
-                        }
-                    }
+            if(getShape().getMaterial().isReflective()) {
+                Vector3 result = shootReflectiveRay();
+                if(result != null){
+                    outputColor = result;
+                    shootReflectiveRay();
                 }
             }
 
-            // Outputcolor or working color ???;
-            outputColor = getShape().getMaterial().getOutputColorNonGamma(this, scene.getLights()); /////////
-
-            // Shadow calculation
             if(shootShadowRay()){
-                // Shadow will not be completly black
-                //outputColor = outputColor.multiply(new Vector3 (0.2,0.2,0.2));
+                //Shadow will not be completly black
+                outputColor = outputColor.dotproduct(new Vector3 (0.2,0.2,0.2));
 
-                // No shadows
-                outputColor = outputColor.dotproduct(new Vector3 (1,1,1));
             }
-        }
 
-        if(outputColor != null){
-            return outputColor.addGamma();
+            return outputColor;
         }
 
         return null;
@@ -99,16 +77,19 @@ public class Ray {
                 is drawn onto the canvas. If the ray does not hit anything, the intersection field stays null.
                  */
         for(Shape s: scene.getShapes()){
-            Intersection inter = s.intersect(startingPoint, rayDirection);
 
-            // The distance to the nearest intersection
-            double d = inter.getNearestIntersection();
+            if(!(s.equals(ignoreSelf))){
+                Intersection inter = s.intersect(startingPoint, rayDirection);
+
+                // The distance to the nearest intersection
+                double d = inter.getNearestIntersection();
 
             /* check if the new distance is smaller as the last recorded distance. Also checks if the distance is smaller
             than 0*/
-            if(d < distance && d >= 0){
-                distance = d;
-                intersection = inter;
+                if(d < distance && d >= 0){
+                    distance = d;
+                    intersection = inter;
+                }
             }
         }
 
@@ -130,11 +111,42 @@ public class Ray {
         return false;
     }
 
-    private Vector3 shootReflectiveRay(double energy){
-        Vector3 transposedIntersectionPoint = getIntersectionPoint().add(getNormal().scalarmultiplication(0.01));
-        Vector3 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
-        Ray ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene, energy ,recursionStep + 1, maxRecursionDepth);
-        return ray.shootRay();
+    private Vector3 shootReflectiveRay(){
+
+        Vector3 reflectiveColor = null;
+        Vector3 output = null;
+        Vector3 reflectivity = getShape().getMaterial().getReflectivity();
+
+        if(recursionStep <= maxRecursionDepth){
+            Vector3 transposedIntersectionPoint = getIntersectionPoint().add(getNormal()); //.scalarmultiplication(0.01)
+            Vector3 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
+            Ray ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene, getShape() ,recursionStep + 1, maxRecursionDepth);
+            Vector3 result = ray.shootRay();
+
+            if (result != null) {
+                reflectiveColor = result;
+            }
+            else{
+                System.out.println("no reflection");
+            }
+
+            // Calculates new albedo and change the albedo from reflectiveColor if it exists.
+            if(reflectiveColor != null){
+                Vector3 objectAlbedo = getShape().getMaterial().getAlbedo();
+
+                Vector3 refColor = reflectivity.dotproduct(reflectiveColor);    // reflectivity only takes red color into consideration
+                Vector3 refl = reflectivity.scalarmultiplication(-1).add(1);
+                Vector3 reflalbedo = refl.dotproduct(objectAlbedo);
+                Vector3 newAlbedo = reflalbedo.add(refColor);
+                Vector3 newAlbedo2 = reflectivity.scalarmultiplication(-1).add(1).dotproduct(objectAlbedo).add(reflectivity.dotproduct(reflectiveColor));
+
+                getShape().getMaterial().setAlbedo(newAlbedo);
+
+                output = getShape().getMaterial().getLocalColor(this, scene.getLights());
+            }
+        }
+
+        return output;
     }
 
     public Vector3 getStartingPoint(){

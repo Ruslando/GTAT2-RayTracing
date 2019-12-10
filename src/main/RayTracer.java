@@ -23,18 +23,19 @@ public class RayTracer {
                 int argb;
 
                 // Creates new ray from camera position to the pixel location of i,j
-                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene,1, 1, 4);
+                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, null, 1, 4);
                 // Shoots ray and waits for a Color to return;
-                Vector3 outputColor = ray.shootRay();
+                Vector3 outputColor = null;
+                outputColor = ray.shootRay();
 
                 /* If the outputColor is null, it means it has hit nothing along its way.
                 in this case we don't write any pixels
                  */
                 if(outputColor != null)  {
-                    if(!(Double.isNaN(outputColor.getX()) || Double.isNaN(outputColor.getY()) || Double.isNaN(outputColor.getZ()))){
-                        argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
-                        output.writePixel(j,i, argb);
-                    }
+                    outputColor = outputColor.normalizedToColor();
+
+                    argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16) | (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
+                    output.writePixel(j,i, argb);
                 }
 
 
