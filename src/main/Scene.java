@@ -21,7 +21,7 @@ public class Scene {
 
     public void addLight(Light light) { lights.add(light); }
 
-    public ArrayList<Shape> getScene(){
+    public ArrayList<Shape> getShapes(){
         return scene;
     }
 

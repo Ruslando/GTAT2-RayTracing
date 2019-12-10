@@ -22,27 +22,22 @@ public class RayTracer {
                 Vector3 rayDirection = camera.getRayDirection(j, i);
                 int argb;
 
-                // Creates new ray from camera postion to the pixel location of i,j
-                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene);
-                // Shoots ray
-                ray.shootRay();
-                // Checks if ray intersects
-                if(ray.hasIntersected()){
-                    Vector3 outputColor;
+                // Creates new ray from camera position to the pixel location of i,j
+                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene,1, 1, 4);
+                // Shoots ray and waits for a Color to return;
+                Vector3 outputColor = ray.shootRay();
 
-                    // Checks if ray is in shadow. Right now sets shadows to be a solid black color
-                    if(ray.isInShadow()){
-                        outputColor = new Vector3(0,0,0);   // Sets color to black
+                /* If the outputColor is null, it means it has hit nothing along its way.
+                in this case we don't write any pixels
+                 */
+                if(outputColor != null)  {
+                    if(!(Double.isNaN(outputColor.getX()) || Double.isNaN(outputColor.getY()) || Double.isNaN(outputColor.getZ()))){
+                        argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
+                        output.writePixel(j,i, argb);
                     }
-                    else {
-                        // Calculates the output color. Calculation happens in material
-                        outputColor = ray.getShape().getMaterial().getOutputColor(ray, scene.getLights());
-                    }
-
-                    // Writes output color as argb value
-                    argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
-                    output.writePixel(j,i, argb);
                 }
+
+
             }
         }
     }
