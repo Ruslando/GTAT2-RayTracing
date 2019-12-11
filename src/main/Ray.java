@@ -1,5 +1,6 @@
 package main;
 
+import main.shader.Material;
 import main.shapes.Shape;
 import main.util.Intersection;
 import main.util.Vector3;
@@ -14,11 +15,13 @@ public class Ray {
 
     private Intersection intersection;
     private boolean hasIntersected;
+    private double currentTransmission;
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, List<Shape> shapes){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection;
         this.shapes = shapes;
+        currentTransmission = 1; //default air for now
     }
 
     public void shootRay(){ // Preferably a nullable object
@@ -66,6 +69,14 @@ public class Ray {
 
     public List<Shape> getShapes(){
         return shapes;
+    }
+
+    public double getCurrentTransmission() {
+        return currentTransmission;
+    }
+
+    public void setCurrentTransmission(double currentTransmission) {
+        this.currentTransmission = currentTransmission;
     }
 
     /*public Vector3 getIntersectionPoint(Intersection intersection){
