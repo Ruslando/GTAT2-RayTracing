@@ -33,12 +33,12 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(15,0,-15), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(0,-10,-15), new Vector3(0,0,0));
         Material standardMaterial = new Material(new Vector3(0,1,0), .2, 0, 0);
-        Material reflectiveMaterial = new Material(new Vector3(1,1,1), 0.1, 0.9, 0);
+        Material reflectiveMaterial = new Material(new Vector3(1,1,1), 0.6, 0.9, 0);
 
-        Shape sphere = new Sphere(2, new Vector3(0,0,0) , reflectiveMaterial);
-        Shape sphere2 = new Sphere(2, new Vector3(3,0,3) , standardMaterial);
+        Shape sphere = new Sphere(2, new Vector3(0,-2,0) , reflectiveMaterial);
+        Shape sphere2 = new Sphere(2, new Vector3(0,0,-5) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 
         /*Quadric zylinder = new Zylinder(1);
@@ -59,7 +59,7 @@ public class OutputController {
         //scene.addShape(new Sphere(1, new Vector3(-3,-3,-3), new Material(new Vector3(0,1,0))));
         //scene.addShape(sphere);
         //scene.addShape(zylinder);
-        scene.addLight(new Light(new Vector3(0,0,-100), 1, new Vector3(255,255,255), false));
+        scene.addLight(new Light(new Vector3(0,-500,-100), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 
         RayTracer rt = new RayTracer(camera, scene, this);

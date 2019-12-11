@@ -16,24 +16,18 @@ public class Ray {
     private int recursionStep;
     private int maxRecursionDepth;
 
-    private Shape ignoreSelf;
+    private Shape ignoreShape;
 
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, Shape ignoreShape, int recursionStep, int maxRecursionDepth){
+    private Intersection previousIntersection;
+
+    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, Shape ignoreShape, Intersection previousIntersection, int recursionStep, int maxRecursionDepth){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection.normalize();
         this.scene = scene;
         this.recursionStep = recursionStep;
         this.maxRecursionDepth = maxRecursionDepth;
-        this.ignoreSelf = ignoreShape;
-    }
-
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene){
-        this.startingPoint = startingPoint;
-        this.rayDirection = raydirection.normalize();
-        this.scene = scene;
-        this.recursionStep = 1;
-        this.maxRecursionDepth = 4;
-        this.ignoreSelf = null;
+        this.ignoreShape = ignoreShape;
+        this.previousIntersection = previousIntersection;
     }
 
     /*
@@ -50,16 +44,16 @@ public class Ray {
             outputColor = getShape().getMaterial().getLocalColor(this, scene.getLights());
 
             if(getShape().getMaterial().isReflective()) {
-                Vector3 result = shootReflectiveRay();
+                Vector3 result = shootReflectionRay();
                 if(result != null){
                     outputColor = result;
-                    shootReflectiveRay();
+                    shootReflectionRay();
                 }
             }
 
             if(shootShadowRay()){
                 //Shadow will not be completly black
-                outputColor = outputColor.dotproduct(new Vector3 (0.2,0.2,0.2));
+                outputColor = outputColor.dotproduct(new Vector3 (0.5,0.5,0.5));
 
             }
 
@@ -73,22 +67,25 @@ public class Ray {
         Intersection intersection = null;
         double distance = Double.MAX_VALUE;
 
-                /* Loops through every object that is in the scene. Only the intersection that is nearest to the screen
-                is drawn onto the canvas. If the ray does not hit anything, the intersection field stays null.
-                 */
+        /* Loops through every object that is in the scene. Only the intersection that is nearest to the screen
+        is drawn onto the canvas. If the ray does not hit anything, the intersection field stays null.
+         */
         for(Shape s: scene.getShapes()){
 
-            Intersection inter = s.intersect(startingPoint, rayDirection);
+            if(!(s.equals(ignoreShape))){
+                Intersection inter = s.intersect(startingPoint, rayDirection);
 
-            // The distance to the nearest intersection
-            double d = inter.getNearestIntersection();
+                // The distance to the nearest intersection
+                double d = inter.getNearestIntersection();
 
             /* check if the new distance is smaller as the last recorded distance. Also checks if the distance is smaller
             than 0*/
-            if(d < distance && d >= 0){
-                distance = d;
-                intersection = inter;
+                if(d < distance && d >= 0){
+                    distance = d;
+                    intersection = inter;
+                }
             }
+
         }
 
         this.intersection = intersection;
@@ -109,14 +106,14 @@ public class Ray {
         return false;
     }
 
-    private Vector3 shootReflectiveRay(){
+    private Vector3 shootReflectionRay(){
 
         Vector3 reflectiveColor = null;
         Vector3 output = null;
         Vector3 reflectivity = getShape().getMaterial().getReflectivity();
 
         if(recursionStep <= maxRecursionDepth){
-            Vector3 transposedIntersectionPoint = getIntersectionPoint().add(getNormal()).scalarmultiplication(0.01);
+            Vector3 transposedIntersectionPoint = getIntersectionPoint();
             Vector3 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
             Ray ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene, getShape() ,recursionStep + 1, maxRecursionDepth);
             Vector3 result = ray.shootRay();
@@ -131,12 +128,7 @@ public class Ray {
             // Calculates new albedo and change the albedo from reflectiveColor if it exists.
             if(reflectiveColor != null){
                 Vector3 objectAlbedo = getShape().getMaterial().getAlbedo();
-
-                Vector3 refColor = reflectivity.dotproduct(reflectiveColor);    // reflectivity only takes red color into consideration
-                Vector3 refl = reflectivity.scalarmultiplication(-1).add(1);
-                Vector3 reflalbedo = refl.dotproduct(objectAlbedo);
-                Vector3 newAlbedo = reflalbedo.add(refColor);
-                Vector3 newAlbedo2 = reflectivity.scalarmultiplication(-1).add(1).dotproduct(objectAlbedo).add(reflectivity.dotproduct(reflectiveColor));
+                Vector3 newAlbedo = reflectivity.scalarmultiplication(-1).add(1).dotproduct(objectAlbedo).add(reflectivity.dotproduct(reflectiveColor));
 
                 getShape().getMaterial().setAlbedo(newAlbedo);
                 output = getShape().getMaterial().getLocalColor(this, scene.getLights());
@@ -145,6 +137,34 @@ public class Ray {
         }
 
         return output;
+    }
+
+    private Vector3 shootRefractionRay(double refractionIndex){
+
+        Vector3 intersectionPoint = getIntersectionPoint();
+        double refractionIndexOfHitObject = getShape().getMaterial().getRefractionIndex();
+        double i = refractionIndex / refractionIndexOfHitObject;
+
+        Vector3 hitNormal = getNormal();
+
+        Vector3 v1 = getRayDirection(); // first ray direction;
+
+        double w1 = v1.scalar(hitNormal) / (v1.magnitude() * hitNormal.magnitude());
+        w1 = Math.acos(w1);
+        double w2 = v1.scalar(hitNormal.scalarmultiplication(-1)) / (v1.magnitude() * hitNormal.scalarmultiplication(-1).magnitude());
+        w2 = Math.acos(w2);
+
+        double a = Math.cos(w1);
+        double b = Math.sqrt(1 - (i * i) * (1 - (a * a)));
+
+        Vector3 v2 = // s. 147, ansonsten v2 benutzen (unten)
+
+        Vector3 v2dot1 = (hitNormal.dotproduct(v1.add(Math.cos(w1)))).scalarmultiplication(i);
+        Vector3 v2dot2 = hitNormal.scalarmultiplication(Math.sqrt(1 - (i * i) * (1 - (Math.cos(w1) * Math.cos(w1))))); // cos2 vielleicht nicht richtig
+        Vector3 v2 = v2dot1.add(v2dot2.scalarmultiplication(-1));
+
+
+        return null;
     }
 
     public Vector3 getStartingPoint(){
@@ -159,8 +179,8 @@ public class Ray {
         return intersection != null;
     }
 
-    public Intersection getIntersection(){
-        return intersection;
+    public Intersection getPreviousIntersection(){
+        return previousIntersection;
     }
 
     public Vector3 getIntersectionPoint(){
@@ -173,10 +193,6 @@ public class Ray {
 
     public Vector3 getNormal(){
         return getShape().getNormal(getIntersectionPoint()).normalize();
-    }
-
-    public Vector3 getOutputColor(){
-        return getOutputColor();
     }
 
 }

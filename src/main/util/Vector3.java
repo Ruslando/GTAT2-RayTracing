@@ -46,7 +46,7 @@ public class Vector3 {
     }
 
     public Vector3 normalize(){
-        double length = magnitude(this);
+        double length = length(this);
         if(Math.abs(length) == 0){
             return new Vector3();
         }
@@ -75,8 +75,12 @@ public class Vector3 {
         return z;
     }
 
-    public double magnitude(Vector3 b){
+    public double length(Vector3 b){
         return Math.sqrt((this.x * b.x) + (this.y * b.y) + (this.z * b.z));
+    }
+
+    public double magnitude(){
+        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.y));
     }
 
     public Vector3 removeGamma(){

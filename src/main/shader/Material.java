@@ -23,7 +23,6 @@ public class Material {
         this.refractionIndex = refractionIndex;
 
         isTransparent = true;
-
         isReflective = metalness > 0;
     }
 
