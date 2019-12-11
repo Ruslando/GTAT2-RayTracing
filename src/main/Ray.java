@@ -5,6 +5,7 @@ import main.shapes.Shape;
 import main.util.Intersection;
 import main.util.Vector3;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class Ray {
@@ -16,12 +17,14 @@ public class Ray {
     private Intersection intersection;
     private boolean hasIntersected;
     private double currentTransmission;
+    private List<Shape> intersectedObjects;
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, List<Shape> shapes){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection;
         this.shapes = shapes;
         currentTransmission = 1; //default air for now
+        intersectedObjects = new ArrayList<>();
     }
 
     public void shootRay(){ // Preferably a nullable object
@@ -78,6 +81,23 @@ public class Ray {
     public void setCurrentTransmission(double currentTransmission) {
         this.currentTransmission = currentTransmission;
     }
+
+    public void addIntersectedObject(Shape s) {
+        intersectedObjects.add(s);
+    }
+
+    public List<Shape> getIntersectedObjects() {
+        return intersectedObjects;
+    }
+
+    public void setIntersectedObjects(List<Shape> s) {
+        intersectedObjects = s;
+    }
+
+    public void removeIntersectedObject(Shape s) {
+        intersectedObjects.remove(s);
+    }
+
 
     /*public Vector3 getIntersectionPoint(Intersection intersection){
         //

@@ -39,17 +39,22 @@ public class Material {
         double Fr = 0;
         double Ft = 0;
 
-        if(getTransmission() != 0) {
+        if(getTransmission() != 0) { // refraction
+            Vector3 normalToUse = new Vector3(normal.getX(), normal.getY(), normal.getZ());
             double i1 = ray.getCurrentTransmission();
             double i2 = getTransmission();
             double i = i1/i2;
-            double a = ray.getRayDirection().scalar(normal);
+            double a = ray.getRayDirection().scalarmultiplication(-1).scalar(normal);
             if(1-i*i*(1-a*a) < 0) {
                 // Totalreflexion
                 Fr = 1;
                 Ft = 0;
             }
             else {
+                if(ray.getIntersectedObjects().contains(ray.getShape())) { // refraction Strahl ist noch im Objekt drin, angenommen es ist das nächste Objekt
+                    normalToUse = normal.scalarmultiplication(-1); // normale umkehren
+                    ray.removeIntersectedObject(ray.getShape());
+                }
                 double b = Math.sqrt((1-i*i*(1-a*a)));
                 Fs = Math.pow((i1*a-i2*b)/(i1*a+i2*b), 2);
                 Fp = Math.pow((i2*a-i1*b)/(i2*a+i1*b),2);
@@ -58,6 +63,9 @@ public class Material {
                 Vector3 refractionRayDirection = ray.getRayDirection().scalarmultiplication(i).add(i*a-b).multiply(normal);
                 Vector3 refractionRayStartPosition = intersection.add(normal.scalarmultiplication(0.001));
                 Ray refractionRay = new Ray(refractionRayStartPosition, refractionRayDirection, ray.getShapes());
+                refractionRay.setIntersectedObjects(ray.getIntersectedObjects());
+                refractionRay.addIntersectedObject(ray.getShape());
+                refractionRay.setCurrentTransmission(i2);
                 refractionRay.shootRay();
                 if(refractionRay.hasIntersected()) {
                     refractedColor = refractionRay.getShape().getMaterial().getOutputColor(refractionRay, lights, reflectionDepth, refractionDepth++);
