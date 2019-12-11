@@ -53,7 +53,7 @@ public class Material {
 
         for(Light light : lights){
             double brightness = light.getBrightness();
-            Vector3 lightColor = light.getRgb();
+            Vector3 lightColor = light.getRgb().removeGamma();
 
             Vector3 V = ray.getRayDirection().scalarmultiplication(-1);
             Vector3 L = light.getPosition().subtract(intersection).normalize();
@@ -80,7 +80,7 @@ public class Material {
 
         }
 
-        return outputColor.clamp(0, 255);
+        return outputColor.clampMin(0).addGamma().clamp(0, 255);
     }
 
     public Vector3 getLocalColor(Ray ray, ArrayList<Light> lights){

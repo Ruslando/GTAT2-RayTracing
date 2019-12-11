@@ -78,18 +78,16 @@ public class Ray {
                  */
         for(Shape s: scene.getShapes()){
 
-            if(!(s.equals(ignoreSelf))){
-                Intersection inter = s.intersect(startingPoint, rayDirection);
+            Intersection inter = s.intersect(startingPoint, rayDirection);
 
-                // The distance to the nearest intersection
-                double d = inter.getNearestIntersection();
+            // The distance to the nearest intersection
+            double d = inter.getNearestIntersection();
 
             /* check if the new distance is smaller as the last recorded distance. Also checks if the distance is smaller
             than 0*/
-                if(d < distance && d >= 0){
-                    distance = d;
-                    intersection = inter;
-                }
+            if(d < distance && d >= 0){
+                distance = d;
+                intersection = inter;
             }
         }
 
@@ -118,7 +116,7 @@ public class Ray {
         Vector3 reflectivity = getShape().getMaterial().getReflectivity();
 
         if(recursionStep <= maxRecursionDepth){
-            Vector3 transposedIntersectionPoint = getIntersectionPoint().add(getNormal()); //.scalarmultiplication(0.01)
+            Vector3 transposedIntersectionPoint = getIntersectionPoint().add(getNormal()).scalarmultiplication(0.01);
             Vector3 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
             Ray ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene, getShape() ,recursionStep + 1, maxRecursionDepth);
             Vector3 result = ray.shootRay();
@@ -141,8 +139,8 @@ public class Ray {
                 Vector3 newAlbedo2 = reflectivity.scalarmultiplication(-1).add(1).dotproduct(objectAlbedo).add(reflectivity.dotproduct(reflectiveColor));
 
                 getShape().getMaterial().setAlbedo(newAlbedo);
-
                 output = getShape().getMaterial().getLocalColor(this, scene.getLights());
+                getShape().getMaterial().setAlbedo(objectAlbedo);
             }
         }
 
