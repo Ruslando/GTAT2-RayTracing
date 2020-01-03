@@ -9,6 +9,8 @@ import main.shader.Material;
 import main.util.Matrix4;
 import main.util.Vector3;
 
+
+
 public class OutputController {
 
     @FXML
@@ -16,12 +18,13 @@ public class OutputController {
 
     private GraphicsContext gc;
 
-
     @FXML
     private void initialize(){
         canvas.setWidth(Main.WIDTH);
         canvas.setHeight(Main.HEIGHT);
         gc = canvas.getGraphicsContext2D();
+
+
 
         double[][] testinput = new double[4][4];
         testinput[0][0] = 1;
@@ -33,7 +36,7 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(5,10,-10), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(-5,0,0), new Vector3(0,0,0));
         Material material = new Material(new Vector3(0,1,0), .2, 0.2);
 
         Shape sphere = new Sphere(1, new Vector3(0,2,-3) , material);
