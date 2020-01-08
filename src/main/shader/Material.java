@@ -5,6 +5,7 @@ import main.Ray;
 import main.util.Vector3;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 public class Material {
     private Vector3 albedo;
@@ -23,16 +24,33 @@ public class Material {
 
     public Vector3 getOutputColor(Ray ray, ArrayList<Light> lights){
 
+        Random r = new Random();
+
         Vector3 outputColor = new Vector3(0,0,0);
         Vector3 intersection = ray.getIntersectionPoint();
         Vector3 normal = ray.getShape().getNormal(intersection);
 
         for(Light light : lights){
             Vector3 shadowRayStartPosition = intersection.add(normal.scalarmultiplication(0.001));
-            Vector3 shadowRayDirection = light.getPosition().subtract(intersection.add(normal.scalarmultiplication(0.1))).normalize();
-            Ray shadowRay = new Ray(shadowRayStartPosition, shadowRayDirection, ray.getShapes());
-            shadowRay.shootRay();
-            if(shadowRay.hasIntersected()) {
+            double shadowRayIntensity = 1;
+            int shadowRayCount = 100;
+            for(int x = 0; x < shadowRayCount; x++) {
+                double xCoord = 0, yCoord = 0, zCoord = 0, d = 0;
+                do {
+                    xCoord = r.nextDouble() * 2.0 - 1.0;
+                    yCoord = r.nextDouble() * 2.0 - 1.0;
+                    zCoord = r.nextDouble() * 2.0 - 1.0;
+                    d = xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
+                } while (d > 1.0 && xCoord == 0 && yCoord == 0 && zCoord == 0);
+                Vector3 offset = new Vector3(xCoord, yCoord, zCoord).normalize();
+                Vector3 shadowRayDirection = light.getPosition().add(offset).normalize();
+                Ray shadowRay = new Ray(shadowRayStartPosition, shadowRayDirection, ray.getShapes());
+                shadowRay.shootRay();
+                if(shadowRay.hasIntersected()) {
+                    shadowRayIntensity -= 1./shadowRayCount;
+                }
+            }
+            if(shadowRayIntensity == 0) { //alle Schattenstrahlen haben ein Obj auf dem Web zum Licht getroffen
 
             }
             else {
@@ -53,7 +71,7 @@ public class Material {
                 Vector3 ks = F.scalarmultiplication(D * G);
                 double kd = (1-0.04) * (1 - metalness); // alternativ für 0.04 ks benutzen
 
-                Vector3 output = lightColor.multiply(albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L))).addGamma();
+                Vector3 output = lightColor.multiply(albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L))).scalarmultiplication(shadowRayIntensity).addGamma();
                 outputColor = outputColor.add(output);
             }
         }
