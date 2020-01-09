@@ -27,7 +27,6 @@ public class Vector3 {
     public double scalar(Vector3 b){
         return this.x * b.x + this.y * b.y + this.z * b.z;
     }
-    // Geändert: Wurzel raus
 
     public double vectormultiplication(Vector3 b){
         return this.x * b.x + this.y * b.y + this.z * b.z;
@@ -80,7 +79,7 @@ public class Vector3 {
     }
 
     public double magnitude(){
-        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.y));
+        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
     }
 
     public Vector3 removeGamma(){

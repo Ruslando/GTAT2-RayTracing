@@ -55,8 +55,21 @@ public class Intersection {
             result = x1;
         }
         else if(intersections == 2){
-            result = Math.min(x1, x2);
-            return result;
+
+            if(x1 >= 0 && x2 >= 0){
+                result = Math.min(x1, x2);
+                return result;
+            }
+            if(x1 < 0 && x2 < 0){
+                return result;
+            }
+            if(x1 < 0 || x2 < 0){
+                result = Math.max(x1, x2);
+            }
+            else{
+                return result;
+            }
+
         }
 
         return result;

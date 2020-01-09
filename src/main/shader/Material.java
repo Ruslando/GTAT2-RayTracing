@@ -16,14 +16,15 @@ public class Material {
     private boolean isReflective;
 
 
-    public Material(Vector3 material, double roughness, double metalness, double refractionIndex) {
+    public Material(Vector3 material, double refractionIndex) {
         this.albedo = material.removeGamma();
-        this.roughness = roughness;
-        this.metalness = metalness;
+        this.roughness = 0.01;
+        this.metalness = 0.9;
         this.refractionIndex = refractionIndex;
 
         isTransparent = true;
-        isReflective = metalness > 0;
+        isReflective = true;
+
     }
 
     public Material(Vector3 material, double roughness, double metalness){
@@ -44,6 +45,7 @@ public class Material {
     public Vector3 getReflectivity(){return albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);}
     public void setAlbedo(Vector3 albedo){ this.albedo = albedo;}
 
+
     private Vector3 calculateColorOnRayHit(Ray ray, ArrayList<Light> lights){
 
         Vector3 outputColor = new Vector3(0,0,0);
@@ -60,8 +62,16 @@ public class Material {
 
             double D = (roughness * roughness) / (Math.PI * Math.pow(((normal.scalar(H) * normal.scalar(H)) * (roughness * roughness - 1) + 1), 2));
 
-            Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
-            Vector3 F = FNull.add(new Vector3(1,1,1).add(FNull.scalarmultiplication(-1)).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
+            Vector3 F;
+            if(isTransparent){
+                double reflectivity = ray.getReflectionRate();
+                F = new Vector3(reflectivity, reflectivity, reflectivity);
+                //F = albedo.scalarmultiplication(reflectivity);
+            }
+            else{
+                Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
+                F = FNull.add(new Vector3(1,1,1).add(FNull.scalarmultiplication(-1)).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
+            }
 
             double G = (normal.scalar(V) / ((normal.scalar(V) * (1 - (roughness / 2)) + (roughness / 2)))
                     * (normal.scalar(L) / (normal.scalar(L) * (1 - (roughness / 2)) + (roughness / 2))));
@@ -71,6 +81,7 @@ public class Material {
 
             // sicko mode
             double nl = brightness * (normal.scalar(L));
+            // Farbe = Lichtintensität * (NL) * lichtfarbe * kd * albedo + ks
             Vector3 albedo = this.albedo.scalarmultiplication(kd).add(ks);
             Vector3 output = lightColor.dotproduct(albedo).scalarmultiplication(nl); // removed nl for testing
             //Vector3 output = lightColor.dotproduct(this.albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L)));
@@ -85,12 +96,6 @@ public class Material {
     public Vector3 getLocalColor(Ray ray, ArrayList<Light> lights){
         return calculateColorOnRayHit(ray, lights).scalarmultiplication(1/255.0);
     }
-
-    public Vector3 getOutputColor(Ray ray, ArrayList<Light> lights){
-        return calculateColorOnRayHit(ray, lights).addGamma();
-    }
-
-
 
 
 }

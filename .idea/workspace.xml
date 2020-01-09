@@ -6,10 +6,16 @@
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/OutputController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Zylinder.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Zylinder.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/OutputController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/OutputController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Ray.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RayTracer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/shader/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shader/Material.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/shapes/Zylinder.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Zylinder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/util/Intersection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Intersection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Vector3.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -323,14 +329,14 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/OutputController.java</url>
-          <line>43</line>
-          <option name="timeStamp" value="16" />
+          <url>file://$PROJECT_DIR$/src/main/RayTracer.java</url>
+          <line>24</line>
+          <option name="timeStamp" value="148" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/RayTracer.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="108" />
+          <url>file://$PROJECT_DIR$/src/main/Ray.java</url>
+          <line>206</line>
+          <option name="timeStamp" value="167" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>
