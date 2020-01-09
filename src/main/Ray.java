@@ -54,18 +54,17 @@ public class Ray {
 
             Material m = getShape().getMaterial();
 
-
+            if(m.isReflective()){
+                Vector3 result = shootReflectionRay();
+                if(result != null){
+                    outputColor = result;
+                }
+            }
             if(m.isTransparent()){
                 Vector3 result = shootRefractionRay();
                 if(result != null) {
                     outputColor = result;
                 }
-            }
-            else if(m.isReflective()){
-                /*Vector3 result = shootReflectionRay();
-                if(result != null){
-                    outputColor.add(result.scalarmultiplication(reflectionRate));
-                }*/
             }
             else{
                 outputColor = m.getLocalColor(this, scene.getLights());
