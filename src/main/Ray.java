@@ -11,7 +11,6 @@ public class Ray {
     private Vector3 rayDirection;
     private Scene scene;
 
-    private Vector3 outputColor;
     private Intersection intersection;
 
     private int recursionStep;
@@ -19,17 +18,18 @@ public class Ray {
 
     private Shape ignoreShape;
     private double currentRefractionIndex;
-
     private double reflectionRate;
+    private boolean insideObject;
 
 
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, int recursionStep, int maxRecursionDepth){
+    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, int recursionStep, int maxRecursionDepth, boolean insideObject){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection.normalize();
         this.scene = scene;
         this.recursionStep = recursionStep;
         this.maxRecursionDepth = maxRecursionDepth;
         this.currentRefractionIndex = 1;
+        this.insideObject = insideObject;
     }
 
     public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene){
@@ -54,31 +54,38 @@ public class Ray {
 
             Material m = getShape().getMaterial();
 
+            Vector3 reflectedColor = null;
+            Vector3 localColor = null;
+
+            if(m.isTransparent()){
+                localColor = shootRefractionRay();
+            }
+            else{
+                localColor = m.getAlbedo();
+            }
+
             if(m.isReflective()){
                 Vector3 result = shootReflectionRay();
                 if(result != null){
-                    outputColor = result;
+                    reflectedColor = result;
+                }
+                else{
+                    reflectedColor = m.getAlbedo();
                 }
             }
-            if(m.isTransparent()){
-                Vector3 result = shootRefractionRay();
-                if(result != null) {
-                    outputColor = result;
-                }
+
+            // Performance: für jeden strahl zu jedem objeckt shoot shadow schicken
+            if(reflectedColor != null && localColor != null){
+                outputColor = m.getLocalColor(this, scene.getLights(), reflectedColor, localColor);
             }
             else{
-                outputColor = m.getLocalColor(this, scene.getLights());
-
-                if(shootShadowRay()){
-                    //Shadow will not be completly black
-                    outputColor = outputColor.dotproduct(new Vector3 (0.5,0.5,0.5));
-                }
+                outputColor = new Vector3(1,1,1);
             }
 
             return outputColor;
         }
 
-        return new Vector3(0.8,0.8,0.8);
+        return new Vector3(1,1,1);
     }
 
     private void shootTraceRay(){
@@ -127,42 +134,42 @@ public class Ray {
 
         Vector3 reflectiveColor = null;
         Vector3 output = null;
-        Vector3 reflectivity = getShape().getMaterial().getReflectivity();
+        Shape shape = getShape();
 
         if(recursionStep <= maxRecursionDepth){
             Vector3 transposedIntersectionPoint;
             Vector3 reflectionRayDirection;
 
             double a = getRayDirection().scalarmultiplication(-1).scalar(getNormal());
+
+            Ray ray;
+
             // If ray moves outside of object
             if(a < 0 ){
                 Vector3 normalReversed = getNormal().scalarmultiplication(-1);
-                transposedIntersectionPoint = transposePositionInNormalDirection(false, 0.01);
+                Vector3 intersectpoint = getIntersectionPoint();
+                transposedIntersectionPoint = transposePositionInNormalDirection(false, 1);
+                //transposedIntersectionPoint = transposePositionInOwnDirection(true, 1);
                 reflectionRayDirection = getRayDirection().subtract(normalReversed.scalarmultiplication(2).dotproduct(normalReversed.dotproduct(getRayDirection()))).normalize();
+
+                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene ,recursionStep + 1, maxRecursionDepth, false);
             }
             // If ray moves inside object
             else{
-                transposedIntersectionPoint = transposePositionInNormalDirection(true, 0.01);
+                transposedIntersectionPoint = transposePositionInNormalDirection(true, 1);
+                //transposedIntersectionPoint = transposePositionInOwnDirection(false, 1);
                 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
+
+                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene ,recursionStep + 1, maxRecursionDepth, true);
             }
 
-            Ray ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene ,recursionStep + 1, maxRecursionDepth);
-            //ray.setIgnoreShape(getShape());
-            Vector3 result = ray.shootRay();
 
-            if (result != null) {
-                reflectiveColor = result;
+            // If the material is not transparent, it will ignore itself in the enxt ray so that it will not accidently hit itself again.
+            if(!shape.getMaterial().isTransparent()){
+                ray.setIgnoreShape(getShape());
             }
+            return ray.shootRay();
 
-            // Calculates new albedo and change the albedo from reflectiveColor if it exists.
-            if(reflectiveColor != null){
-                Vector3 objectAlbedo = getShape().getMaterial().getAlbedo();
-                Vector3 newAlbedo = reflectivity.scalarmultiplication(-1).add(1).dotproduct(objectAlbedo).add(reflectivity.dotproduct(reflectiveColor));
-
-                getShape().getMaterial().setAlbedo(newAlbedo);
-                output = getShape().getMaterial().getLocalColor(this, scene.getLights());
-                getShape().getMaterial().setAlbedo(objectAlbedo);
-            }
         }
 
         return output;
@@ -181,16 +188,20 @@ public class Ray {
             double i1 = this.currentRefractionIndex;
             double i2;
 
+            boolean inside;
+
             // When ray moves outside of object
             if(a < 0){
                 a *= -1;
-                transposedIntersectionPoint = transposePositionInNormalDirection(true, 0.01);
+                transposedIntersectionPoint = transposePositionInNormalDirection(true, 0.5);
                 i2 = 1.0;   // for testing, ray will always hit air first when leaving an object, will be changed later
+                inside = false;
             }
             else{   // When ray moves inside object
                 hitNormal = hitNormal.scalarmultiplication(-1);
-                transposedIntersectionPoint = transposePositionInNormalDirection(false, 0.01);
+                transposedIntersectionPoint = transposePositionInNormalDirection(false, 0.5);
                 i2 = getShape().getMaterial().getRefractionIndex();
+                inside = true;
             }
 
             double i = i1 / i2;
@@ -204,7 +215,6 @@ public class Ray {
             // Check if angle is too big, if it is reflections occur
             if(b < 0){
                 reflectionRate = 1;
-                output = shootReflectionRay();
             }
             else{
                 b = Math.sqrt(b);
@@ -219,14 +229,13 @@ public class Ray {
                 Vector3 v2 = v1.scalarmultiplication(i).add(hitNormal.scalarmultiplication(i*a - b)).normalize();
 
                 // Prepares new refracted ray
-                Ray ray = new Ray(transposedIntersectionPoint, v2, scene, recursionStep+1, maxRecursionDepth);
+                Ray ray = new Ray(transposedIntersectionPoint, v2, scene, recursionStep+1, maxRecursionDepth, inside);
                 ray.setCurrentRefractionIndex(i2);
                 output = ray.shootRay();
                 // When the ray returns null as output, this means that the ray hit its last object. It is then that the local color is calculated.
                 if(output == null){
                     //output = getShape().getMaterial().getLocalColorRefraction(this, scene.getLights(), calculateReflectivityAmount());
-
-                    output = getShape().getMaterial().getLocalColor(this, scene.getLights());   // Eventuell falsch
+                    //output = getShape().getMaterial().getLocalColor(this, scene.getLights());   // Eventuell falsch
                 }
 
             }
@@ -248,6 +257,15 @@ public class Ray {
         }
         else{
             return getIntersectionPoint().add(getNormal().scalarmultiplication(-1).scalarmultiplication(percentage));
+        }
+    }
+
+    private Vector3 transposePositionInOwnDirection(boolean forward, double percentage){
+        if(forward){
+            return getIntersectionPoint().add(getRayDirection().scalarmultiplication(percentage));
+        }
+        else{
+            return getIntersectionPoint().add(getRayDirection().scalarmultiplication(-1).scalarmultiplication(percentage));
         }
     }
 

@@ -34,10 +34,10 @@ public class OutputController {
 
 
         Camera camera = new Camera(new Vector3(0,0,-7), new Vector3(0,0,0));
-        Material standardMaterial = new Material(new Vector3(0,1,0), .2, 0.1);
-        Material reflectiveMaterial = new Material(new Vector3(0,1,0), 1.0);
+        Material standardMaterial = new Material(new Vector3(0,1,0), 0.2, 0.4);
+        Material reflectiveMaterial = new Material(new Vector3(0,0,0), 1);
 
-        Shape sphere = new Sphere(2, new Vector3(0,0,0) , standardMaterial);
+        Shape sphere = new Sphere(2, new Vector3(0,0,0) , reflectiveMaterial);
         Shape sphere2 = new Sphere(2, new Vector3(0,0,10) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 

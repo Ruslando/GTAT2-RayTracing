@@ -28,10 +28,6 @@ public class Vector3 {
         return this.x * b.x + this.y * b.y + this.z * b.z;
     }
 
-    public double vectormultiplication(Vector3 b){
-        return this.x * b.x + this.y * b.y + this.z * b.z;
-    }
-
     public Vector3 dotproduct(Vector3 v) {
         return new Vector3(this.x*v.x, this.y*v.y,this.z*v.z);
     }

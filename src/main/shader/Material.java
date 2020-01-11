@@ -46,7 +46,7 @@ public class Material {
     public void setAlbedo(Vector3 albedo){ this.albedo = albedo;}
 
 
-    private Vector3 calculateColorOnRayHit(Ray ray, ArrayList<Light> lights){
+    private Vector3 calculateColorOnRayHit(Ray ray, ArrayList<Light> lights, Vector3 reflectedColor, Vector3 localColor){
 
         Vector3 outputColor = new Vector3(0,0,0);
         Vector3 intersection = ray.getIntersectionPoint();
@@ -66,7 +66,6 @@ public class Material {
             if(isTransparent){
                 double reflectivity = ray.getReflectionRate();
                 F = new Vector3(reflectivity, reflectivity, reflectivity);
-                //F = albedo.scalarmultiplication(reflectivity);
             }
             else{
                 Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
@@ -76,16 +75,19 @@ public class Material {
             double G = (normal.scalar(V) / ((normal.scalar(V) * (1 - (roughness / 2)) + (roughness / 2)))
                     * (normal.scalar(L) / (normal.scalar(L) * (1 - (roughness / 2)) + (roughness / 2))));
 
+            // Amount of reflected light aka DFG
             Vector3 ks = F.scalarmultiplication(D * G);
-            double kd = (1 - 0.04) * (1 - metalness); // alternativ für 0.04 ks benutzen
 
-            // sicko mode
-            double nl = brightness * (normal.scalar(L));
-            // Farbe = Lichtintensität * (NL) * lichtfarbe * kd * albedo + ks
-            Vector3 albedo = this.albedo.scalarmultiplication(kd).add(ks);
-            Vector3 output = lightColor.dotproduct(albedo).scalarmultiplication(nl); // removed nl for testing
-            //Vector3 output = lightColor.dotproduct(this.albedo.scalarmultiplication(kd).add(ks)).scalarmultiplication(brightness * (normal.scalar(L)));
-            // kd changed to kd2
+            Vector3 kd = new Vector3(1,1,1).subtract(F);
+
+            double nl = (normal.scalar(L));
+            // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
+            Vector3 diffus = localColor.dotproduct(kd);
+            Vector3 reflect = F.dotproduct(reflectedColor);
+
+            Vector3 albedo = diffus.add(reflect).add(ks);
+            // lichtfarbe + lichtintensität + NdotL * "albedo"
+            Vector3 output = lightColor.scalarmultiplication(nl).scalarmultiplication(brightness).dotproduct(albedo);
             outputColor = outputColor.add(output);
 
         }
@@ -93,8 +95,8 @@ public class Material {
         return outputColor.clampMin(0).addGamma().clamp(0, 255);
     }
 
-    public Vector3 getLocalColor(Ray ray, ArrayList<Light> lights){
-        return calculateColorOnRayHit(ray, lights).scalarmultiplication(1/255.0);
+    public Vector3 getLocalColor(Ray ray, ArrayList<Light> lights, Vector3 reflectedColor, Vector3 localColor){
+        return calculateColorOnRayHit(ray, lights, reflectedColor, localColor).scalarmultiplication(1/255.0);
     }
 
 

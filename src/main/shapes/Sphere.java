@@ -36,10 +36,10 @@ public class Sphere implements Shape{
     public Intersection intersect(Vector3 origin, Vector3 direction) {
         /* Dividing up the ray and the circle for use for the Citardauq-formula.*/
 
-        double a = direction.vectormultiplication(direction);
+        double a = direction.scalar(direction);
         Vector3 eyecenter = origin.subtract(center);
-        double b = 2 * direction.vectormultiplication(eyecenter);
-        double c = eyecenter.vectormultiplication(eyecenter) - radius*radius;
+        double b = 2 * direction.scalar(eyecenter);
+        double c = eyecenter.scalar(eyecenter) - radius*radius;
 
         return new Intersection(a,b,c, this);
     }

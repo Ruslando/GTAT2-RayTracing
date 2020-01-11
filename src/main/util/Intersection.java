@@ -9,6 +9,8 @@ public class Intersection {
     public double x1;
     public double x2;
 
+    private double nearestDistance;
+
     /** Calculates the abc formula and returns the result as a Intersection data type.
      *
      * @param a The a part of the formula
@@ -46,33 +48,45 @@ public class Intersection {
      */
     public double getNearestIntersection(){
 
-        double result = Double.MAX_VALUE;
+        if(nearestDistance == 0){
+            double result = Double.MAX_VALUE;
 
         /*if(intersections == 0){               doesnt matter here, will be max value anyway
             result = Double.MAX_VALUE;
         }*/
-        if(intersections == 1){
-            result = x1;
+            if(intersections == 1){
+                result = x1;
+            }
+            else if(intersections == 2){
+
+                if(x1 >= 0 && x2 >= 0){
+                    result = Math.min(x1, x2);
+                    return result;
+                }
+                if(x1 < 0 && x2 < 0){
+                    return result;
+                }
+                if(x1 < 0 || x2 < 0){
+                    result = Math.max(x1, x2);
+                }
+                else{
+                    return result;
+                }
+
+            }
+
+            nearestDistance = result;
+            return result;
         }
-        else if(intersections == 2){
-
-            if(x1 >= 0 && x2 >= 0){
-                result = Math.min(x1, x2);
-                return result;
-            }
-            if(x1 < 0 && x2 < 0){
-                return result;
-            }
-            if(x1 < 0 || x2 < 0){
-                result = Math.max(x1, x2);
-            }
-            else{
-                return result;
-            }
-
+        else{
+            return nearestDistance;
         }
+    }
 
-        return result;
+    public void changeSignOnInsideObject(){
+        x1 *= -1;
+        x2 *= -1;
+        nearestDistance *=-1;
     }
 
     public Shape getShape() {
