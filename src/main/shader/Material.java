@@ -68,15 +68,17 @@ public class Material {
                 F = new Vector3(reflectivity, reflectivity, reflectivity);
             }
             else{
-                Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
-                F = FNull.add(new Vector3(1,1,1).add(FNull.scalarmultiplication(-1)).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
+                //Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
+                Vector3 FNull = albedo.scalarmultiplication(metalness).add((1 - metalness) * 0.04);
+                F = FNull.add(new Vector3(1,1,1).subtract(FNull).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
             }
 
             double G = (normal.scalar(V) / ((normal.scalar(V) * (1 - (roughness / 2)) + (roughness / 2)))
                     * (normal.scalar(L) / (normal.scalar(L) * (1 - (roughness / 2)) + (roughness / 2))));
 
-            // Amount of reflected light aka DFG
+            // Amount of albedo reflected light aka DFG
             Vector3 ks = F.scalarmultiplication(D * G);
+            // Amount of diffused light
             Vector3 kd;
             if(isTransparent){
                 kd = new Vector3(1,1,1).subtract(F);
@@ -89,7 +91,7 @@ public class Material {
             // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
 
             Vector3 diffus = albedo;
-            Vector3 reflect = new Vector3(1,1,1);
+            Vector3 reflect = new Vector3(0,0,0);
 
             if(localColor != null){
                 diffus = localColor.dotproduct(kd);
@@ -109,8 +111,7 @@ public class Material {
             // lichtfarbe + lichtintensität + NdotL * "lighting"
             Vector3 output;
             if(isTransparent){
-                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(0.9);
-                output = output.dotproduct(lighting);
+                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(0.95).dotproduct(lighting);
             }
             else{
                 output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);

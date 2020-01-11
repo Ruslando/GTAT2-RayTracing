@@ -83,12 +83,6 @@ public class Intersection {
         }
     }
 
-    public void changeSignOnInsideObject(){
-        x1 *= -1;
-        x2 *= -1;
-        nearestDistance *=-1;
-    }
-
     public Shape getShape() {
         return shape;
     }

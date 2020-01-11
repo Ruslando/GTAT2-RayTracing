@@ -27,7 +27,7 @@ public class RayTracer {
                 int argb;
 
                 // Creates new ray from camera position to the pixel location of i,j
-                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, 1, 4, false);
+                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, 1, 3);
                 // Shoots ray and waits for a Color to return;
                 Vector3 outputColor = null;
                 outputColor = ray.shootRay();
