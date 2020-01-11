@@ -34,11 +34,11 @@ public class OutputController {
 
 
         Camera camera = new Camera(new Vector3(0,0,-7), new Vector3(0,0,0));
-        Material standardMaterial = new Material(new Vector3(0,1,0), 0.2, 0.4);
-        Material reflectiveMaterial = new Material(new Vector3(0,0,0), 1);
+        Material standardMaterial = new Material(new Vector3(0,0,1), 0.01, 0.9);
+        Material reflectiveMaterial = new Material(new Vector3(1,1,1), 1.3);
 
         Shape sphere = new Sphere(2, new Vector3(0,0,0) , reflectiveMaterial);
-        Shape sphere2 = new Sphere(2, new Vector3(0,0,10) , standardMaterial);
+        Shape sphere2 = new Sphere(2, new Vector3(0,0,5) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 
         /*Quadric zylinder = new Zylinder(1);
@@ -53,7 +53,7 @@ public class OutputController {
 
         Scene scene = new Scene();
         scene.addShape(sphere);
-        //scene.addShape(sphere2);
+        scene.addShape(sphere2);
         scene.addLight(new Light(new Vector3(0,0,-100), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));
 

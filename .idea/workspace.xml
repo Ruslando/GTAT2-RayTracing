@@ -7,15 +7,11 @@
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/Ray.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/RayTracer.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shader/Material.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/shapes/Sphere.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Intersection.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Intersection.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" beforeDir="false" afterPath="$PROJECT_DIR$/out/production/RayTracing/main/util/Vector3.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/OutputController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/OutputController.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/Ray.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/Ray.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/RayTracer.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/RayTracer.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/shader/Material.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shader/Material.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/shapes/Sphere.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/shapes/Sphere.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/util/Intersection.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Intersection.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/util/Vector3.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/util/Vector3.java" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
@@ -258,6 +254,7 @@
       <workItem from="1576000400688" duration="10353000" />
       <workItem from="1578672057036" duration="1379000" />
       <workItem from="1578684860951" duration="5248000" />
+      <workItem from="1578733011770" duration="12321000" />
     </task>
     <servers />
   </component>
@@ -331,14 +328,9 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/Ray.java</url>
-          <line>78</line>
-          <option name="timeStamp" value="184" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/RayTracer.java</url>
-          <line>21</line>
-          <option name="timeStamp" value="185" />
+          <line>24</line>
+          <option name="timeStamp" value="192" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

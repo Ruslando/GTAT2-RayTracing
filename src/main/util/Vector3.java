@@ -74,10 +74,6 @@ public class Vector3 {
         return Math.sqrt((this.x * b.x) + (this.y * b.y) + (this.z * b.z));
     }
 
-    public double magnitude(){
-        return Math.sqrt((this.x * this.x) + (this.y * this.y) + (this.z * this.z));
-    }
-
     public Vector3 removeGamma(){
         return new Vector3(Math.pow(this.x, 2.2), Math.pow(this.y, 2.2), Math.pow(this.z, 2.2));
     }

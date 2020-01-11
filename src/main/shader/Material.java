@@ -77,17 +77,44 @@ public class Material {
 
             // Amount of reflected light aka DFG
             Vector3 ks = F.scalarmultiplication(D * G);
-
-            Vector3 kd = new Vector3(1,1,1).subtract(F);
+            Vector3 kd;
+            if(isTransparent){
+                kd = new Vector3(1,1,1).subtract(F);
+            }
+            else{
+                kd = new Vector3(1,1,1).subtract(ks).scalarmultiplication(1 - metalness);
+            }
 
             double nl = (normal.scalar(L));
             // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
-            Vector3 diffus = localColor.dotproduct(kd);
-            Vector3 reflect = F.dotproduct(reflectedColor);
 
-            Vector3 albedo = diffus.add(reflect).add(ks);
-            // lichtfarbe + lichtintensität + NdotL * "albedo"
-            Vector3 output = lightColor.scalarmultiplication(nl).scalarmultiplication(brightness).dotproduct(albedo);
+            Vector3 diffus = albedo;
+            Vector3 reflect = new Vector3(1,1,1);
+
+            if(localColor != null){
+                diffus = localColor.dotproduct(kd);
+            }
+            else{
+                diffus = diffus.dotproduct(kd);
+            }
+
+            if(reflectedColor != null){
+                reflect = reflectedColor.dotproduct(F);
+            }
+            else{
+                reflect = reflect.dotproduct(F);
+            }
+
+            Vector3 lighting = ks.add(reflect).add(diffus);
+            // lichtfarbe + lichtintensität + NdotL * "lighting"
+            Vector3 output;
+            if(isTransparent){
+                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(0.9);
+                output = output.dotproduct(lighting);
+            }
+            else{
+                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);
+            }
             outputColor = outputColor.add(output);
 
         }
