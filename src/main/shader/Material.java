@@ -16,10 +16,10 @@ public class Material {
     private boolean isReflective;
 
 
-    public Material(Vector3 material, double refractionIndex) {
-        this.albedo = material.removeGamma();
+    public Material(double refractionIndex) {
+        this.albedo = new Vector3(0,0,0).removeGamma();
         this.roughness = 0.01;
-        this.metalness = 0.9;
+        this.metalness = 0;
         this.refractionIndex = refractionIndex;
 
         isTransparent = true;
@@ -42,7 +42,6 @@ public class Material {
     public double getRefractionIndex() {return this.refractionIndex;}
     public boolean isTransparent(){return this.isTransparent;}
     public boolean isReflective(){return this.isReflective;}
-    public Vector3 getReflectivity(){return albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);}
     public void setAlbedo(Vector3 albedo){ this.albedo = albedo;}
 
 
@@ -54,7 +53,7 @@ public class Material {
 
         for(Light light : lights){
             double brightness = light.getBrightness();
-            Vector3 lightColor = light.getRgb().removeGamma();
+            Vector3 lightColor = light.getColorGamma();
 
             Vector3 V = ray.getRayDirection().scalarmultiplication(-1);
             Vector3 L = light.getPosition().subtract(intersection).normalize();
@@ -63,8 +62,9 @@ public class Material {
             double D = (roughness * roughness) / (Math.PI * Math.pow(((normal.scalar(H) * normal.scalar(H)) * (roughness * roughness - 1) + 1), 2));
 
             Vector3 F;
+            double reflectivity = ray.getReflectionRate();
+
             if(isTransparent){
-                double reflectivity = ray.getReflectionRate();
                 F = new Vector3(reflectivity, reflectivity, reflectivity);
             }
             else{
@@ -90,28 +90,22 @@ public class Material {
             double nl = (normal.scalar(L));
             // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
 
-            Vector3 diffus = albedo;
-            Vector3 reflect = new Vector3(0,0,0);
-
-            if(localColor != null){
-                diffus = localColor.dotproduct(kd);
+            if(localColor == null){
+                localColor = new Vector3(0,0,0);
             }
-            else{
-                diffus = diffus.dotproduct(kd);
+            if(reflectedColor == null){
+                reflectedColor = new Vector3(0,0,0);
             }
 
-            if(reflectedColor != null){
-                reflect = reflectedColor.dotproduct(F);
-            }
-            else{
-                reflect = reflect.dotproduct(F);
-            }
+            Vector3 diffus = localColor.dotproduct(kd);
+            Vector3 reflect = reflectedColor.dotproduct(F);
 
             Vector3 lighting = ks.add(reflect).add(diffus);
             // lichtfarbe + lichtintensität + NdotL * "lighting"
             Vector3 output;
             if(isTransparent){
-                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(0.95).dotproduct(lighting);
+                output = lightColor.scalarmultiplication(brightness * 0.5).dotproduct(lighting);
+                //output = lighting.scalarmultiplication(255).removeGamma();
             }
             else{
                 output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);

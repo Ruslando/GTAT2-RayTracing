@@ -21,13 +21,13 @@ public class RayTracer {
                 //Initializes first ray direction from camera
                 Vector3 rayDirection = camera.getRayDirection(j, i);
 
-                if(i == 240 && j == 320){
+                if(i == Main.HEIGHT / 2 + 125 && j == Main.WIDTH / 2){
                     System.out.println();
                 }
                 int argb;
 
                 // Creates new ray from camera position to the pixel location of i,j
-                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, 1, 3);
+                Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, 1, 7);
                 // Shoots ray and waits for a Color to return;
                 Vector3 outputColor = null;
                 outputColor = ray.shootRay();
