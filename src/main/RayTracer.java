@@ -127,9 +127,9 @@ public class RayTracer {
             square4Colors[3] = colors[3];
 
             Vector3 color1 = supersample(camWorldPos, shapes, lights, square1Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
-            Vector3 color2 = supersample(camWorldPos, shapes, lights, square2Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
-            Vector3 color3 = supersample(camWorldPos, shapes, lights, square3Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
-            Vector3 color4 = supersample(camWorldPos, shapes, lights, square4Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color2 = supersample(camWorldPos, shapes, lights, square2Colors, getSquareCenters(squareCenters[0][1], squareCenters[1][1], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color3 = supersample(camWorldPos, shapes, lights, square3Colors, getSquareCenters(squareCenters[0][2], squareCenters[1][2], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color4 = supersample(camWorldPos, shapes, lights, square4Colors, getSquareCenters(squareCenters[0][3], squareCenters[1][3], 1./Math.pow(2, step+1)), step+1);
             result = color1.add(color2).add(color3).add(color4).scalarmultiplication(1./4.);
         }
 
