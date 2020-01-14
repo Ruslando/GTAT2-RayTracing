@@ -7,12 +7,14 @@ public class Light {
     private double brightness;
     private Vector3 rgb;
     private boolean quadraticDecay;
+    private Vector3 colorGamma;
 
     public Light(Vector3 position, double brightness, Vector3 rgb, boolean quadraticDecay) {
         this.position = position;
         this.brightness = brightness;
         this.rgb = rgb;
         this.quadraticDecay = quadraticDecay;
+        this.colorGamma = rgb.removeGamma();
     }
 
     public Vector3 getPosition() {
@@ -29,5 +31,9 @@ public class Light {
 
     public boolean getQuadraticDecay() {
         return this.quadraticDecay;
+    }
+
+    public Vector3 getColorGamma() {
+        return colorGamma;
     }
 }

@@ -52,7 +52,7 @@ public class RayTracer {
                         outputColor = ray1Result.add(ray2Result).add(ray3Result).scalarmultiplication(1./3.);
                     }
 
-                    argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
+                    argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16) | (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
                     output.writePixel(j,i, argb);
                 }
             }

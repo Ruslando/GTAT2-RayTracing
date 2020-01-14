@@ -27,13 +27,8 @@ public class Vector3 {
     public double scalar(Vector3 b){
         return this.x * b.x + this.y * b.y + this.z * b.z;
     }
-    // Geändert: Wurzel raus
 
-    public double vectorproduct (Vector3 b){
-        return this.x * b.x + this.y * b.y + this.z * b.z;
-    }
-
-    public Vector3 multiply(Vector3 v) {
+    public Vector3 dotproduct(Vector3 v) {
         return new Vector3(this.x*v.x, this.y*v.y,this.z*v.z);
     }
 
@@ -46,7 +41,7 @@ public class Vector3 {
     }
 
     public Vector3 normalize(){
-        double length = magnitude(this);
+        double length = length(this);
         if(Math.abs(length) == 0){
             return new Vector3();
         }
@@ -75,7 +70,7 @@ public class Vector3 {
         return z;
     }
 
-    public double magnitude(Vector3 b){
+    public double length(Vector3 b){
         return Math.sqrt((this.x * b.x) + (this.y * b.y) + (this.z * b.z));
     }
 
@@ -93,6 +88,18 @@ public class Vector3 {
 
     public Vector3 addGammaFast(){
         return new Vector3(Math.sqrt(this.x), Math.sqrt(this.y), Math.sqrt(this.z));
+    }
+
+    public Vector3 clamp(double min, double max){
+        return new Vector3(Math.max(min, Math.min(this.x, max)), Math.max(min, Math.min(this.y, max)), Math.max(min, Math.min(this.z, max)));
+    }
+
+    public Vector3 clampMin(double min){
+        return new Vector3(Math.max(min, this.x), Math.max(min, this.y), Math.max(min, this.z));
+    }
+
+    public Vector3 normalizedToColor(){
+        return new Vector3(this.x * 255, this.y * 255, this.z * 255);
     }
 
 
