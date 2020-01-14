@@ -42,6 +42,10 @@ public class Intersection {
 
     }
 
+    public boolean hasIntersected(){
+        return ((x1 > 0 || x2 > 0) && intersections > 0);
+    }
+
     /**
      * Gives the nearest intersection, if there are two.
      * @return A double value of the nearest intersection.

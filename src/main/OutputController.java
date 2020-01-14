@@ -33,16 +33,16 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(5,0,-7), new Vector3(0,0,0));
-        Material standardMaterial = new Material(new Vector3(1,0,0), 0.1, 0.5);
-        Material standardMaterial2 = new Material(new Vector3(0,1,0), 0.1, 0.5);
+        Camera camera = new Camera(new Vector3(3,0,-7), new Vector3(0,0,0));
+        Material standardMaterial = new Material(new Vector3(1,0,0), 0.1, 0.2);
+        Material standardMaterial2 = new Material(new Vector3(1,1,1), 0.1, 0.7);
         Material transparentMaterial1 = new Material(1.3);
-        Material transparentMaterial2 = new Material(1.7);
+        Material transparentMaterial2 = new Material(1);
 
-        Shape sphere = new Sphere(3, new Vector3(0,0,0) , transparentMaterial1);
-        Shape sphere2 = new Sphere(1, new Vector3(0,0, 0) , transparentMaterial2);
-        Shape sphere3 = new Sphere(2, new Vector3(0,3, 6) , standardMaterial2);
-        //Shape sphere3 = new Sphere(2, new Vector3(0,0,0) , transparentMaterial2);
+        Shape sphere = new Sphere(2, new Vector3(0,0,0) , transparentMaterial1);
+        Shape sphere2 = new Sphere(2, new Vector3(0,0, 0) , transparentMaterial1);
+        Shape sphere3 = new Sphere(1, new Vector3(0,0, 0) , standardMaterial2);
+        Shape sphere4 = new Sphere(2, new Vector3(0,2,4) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 
         /*Quadric zylinder = new Zylinder(1);
@@ -56,9 +56,10 @@ public class OutputController {
         //Differenz v = new Differenz(zylinder, sphere);
 
         Scene scene = new Scene();
-        scene.addShape(sphere);
+        //scene.addShape(sphere);
         scene.addShape(sphere2);
-        scene.addShape(sphere3);
+        //scene.addShape(sphere3);
+        scene.addShape(sphere4);
 
         scene.addLight(new Light(new Vector3(0,0,-100), 1, new Vector3(255,255,255), false));
         // scene.addLight(new Light(new Vector3(0,10,-10), 1, new Vector3(255,255,255), false));

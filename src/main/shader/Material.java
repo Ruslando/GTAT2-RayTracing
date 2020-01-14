@@ -17,7 +17,7 @@ public class Material {
 
 
     public Material(double refractionIndex) {
-        this.albedo = new Vector3(0,0,0).removeGamma();
+        this.albedo = new Vector3(1,1,1).removeGamma();
         this.roughness = 0.01;
         this.metalness = 0;
         this.refractionIndex = refractionIndex;
@@ -68,7 +68,6 @@ public class Material {
                 F = new Vector3(reflectivity, reflectivity, reflectivity);
             }
             else{
-                //Vector3 FNull = albedo.scalarmultiplication(((1 - metalness) * 0.04) + metalness);
                 Vector3 FNull = albedo.scalarmultiplication(metalness).add((1 - metalness) * 0.04);
                 F = FNull.add(new Vector3(1,1,1).subtract(FNull).scalarmultiplication(Math.pow((1 - normal.scalar(V)), 5)));
             }
@@ -91,10 +90,10 @@ public class Material {
             // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
 
             if(localColor == null){
-                localColor = new Vector3(0,0,0);
+                localColor = albedo;
             }
             if(reflectedColor == null){
-                reflectedColor = new Vector3(0,0,0);
+                reflectedColor = new Vector3(0.7,0.7,0.7);
             }
 
             Vector3 diffus = localColor.dotproduct(kd);
@@ -104,8 +103,8 @@ public class Material {
             // lichtfarbe + lichtintensität + NdotL * "lighting"
             Vector3 output;
             if(isTransparent){
-                output = lightColor.scalarmultiplication(brightness * 0.5).dotproduct(lighting);
-                //output = lighting.scalarmultiplication(255).removeGamma();
+                //output = lightColor.scalarmultiplication(brightness).dotproduct(lighting);
+                output = lighting.scalarmultiplication(255).removeGamma();
             }
             else{
                 output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);
