@@ -25,8 +25,27 @@ public class RayTracer {
         for (int i = 0; i < Main.HEIGHT; i++){      //Loop every pixel
             for(int j = 0; j < Main.WIDTH; j++){
 
-                Vector3 outputColor = supersample(j, i, camWorldPos, shapes, lights, 0);
+                Vector3 outputColor;
                 int argb;
+
+                double[][] squareCenters = getSquareCenters(j, i, 1);
+                Vector3[] cornerColors = new Vector3[4];
+
+                for(int index = 0; index < 4; index++) {
+                    double rayX = squareCenters[0][index];
+                    double rayY = squareCenters[1][index];
+                    Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
+                    Ray r = new Ray(camWorldPos, rayDirection, shapes);
+                    r.shootRay();
+                    if(r.hasIntersected()) {
+                        cornerColors[index] = r.getShape().getMaterial().getOutputColor(r, lights);
+                    }
+                    else {
+                        cornerColors[index] = new Vector3(255, 255,255);
+                    }
+                }
+
+                outputColor = supersample(camWorldPos, shapes, lights, cornerColors, squareCenters, 0);
 
                 argb = (0xff << 24) | (Math.max(0, Math.min(255, (int) outputColor.getX())) << 16)| (Math.max(0, Math.min(255, (int) outputColor.getY())) << 8) | (Math.max(0, Math.min(255, (int) outputColor.getZ())));
                 output.writePixel(j, i, argb);
@@ -73,31 +92,45 @@ public class RayTracer {
         }
     }
 
-    private Vector3 supersample(double i, double j, Vector3 camWorldPos, ArrayList<Shape> shapes, ArrayList<Light> lights, int step) {
+    private Vector3 supersample(Vector3 camWorldPos, ArrayList<Shape> shapes, ArrayList<Light> lights, Vector3[] colors, double[][] squareCenters, int step) {
         Vector3 result;
 
-        double[][] squareCenters = getSquareCenters(i, j, 1./Math.pow(2,step));
-        Vector3[] cornerColors = new Vector3[4];
-
-        for(int index = 0; index < 4; index++) {
-            double rayX = squareCenters[0][index];
-            double rayY = squareCenters[1][index];
-            Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
-            Ray r = new Ray(camWorldPos, rayDirection, shapes);
-            r.shootRay();
-            if(r.hasIntersected()) {
-                cornerColors[index] = r.getShape().getMaterial().getOutputColor(r, lights);
-            }
-            else {
-                cornerColors[index] = new Vector3(255, 255,255);
-            }
-        }
-
-        if(areSquareColorsSimilar(cornerColors)) {
-            result = cornerColors[0];
+        if(areSquareColorsSimilar(colors) || step > 5) {
+            result = colors[0];
         }
         else {
-            result = supersample(squareCenters[0][0], squareCenters[1][0], camWorldPos, shapes, lights, step++);
+            Vector3[] middleColors = calculateMiddleColors(squareCenters, camWorldPos, shapes, lights);
+
+            Vector3[] square1Colors = new Vector3[4];
+            Vector3[] square2Colors = new Vector3[4];
+            Vector3[] square3Colors = new Vector3[4];
+            Vector3[] square4Colors = new Vector3[4];
+
+            square1Colors[0] = colors[0];
+            square1Colors[1] = middleColors[0];
+            square1Colors[2] = middleColors[1];
+            square1Colors[3] = middleColors[2];
+
+            square2Colors[0] = middleColors[0];
+            square2Colors[1] = colors[1];
+            square2Colors[2] = middleColors[2];
+            square2Colors[3] = middleColors[3];
+
+            square3Colors[0] = middleColors[1];
+            square3Colors[1] = middleColors[2];
+            square3Colors[2] = colors[2];
+            square3Colors[3] = middleColors[4];
+
+            square4Colors[0] = middleColors[2];
+            square4Colors[1] = middleColors[3];
+            square4Colors[2] = middleColors[4];
+            square4Colors[3] = colors[3];
+
+            Vector3 color1 = supersample(camWorldPos, shapes, lights, square1Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color2 = supersample(camWorldPos, shapes, lights, square2Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color3 = supersample(camWorldPos, shapes, lights, square3Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
+            Vector3 color4 = supersample(camWorldPos, shapes, lights, square4Colors, getSquareCenters(squareCenters[0][0], squareCenters[1][0], 1./Math.pow(2, step+1)), step+1);
+            result = color1.add(color2).add(color3).add(color4).scalarmultiplication(1./4.);
         }
 
         return result;
@@ -166,5 +199,24 @@ public class RayTracer {
             if(Math.abs(color - otherColor) > 25) return false;
         }
         return true;
+    }
+
+    private Vector3[] calculateMiddleColors(double[][] squareCenters, Vector3 camWorldPos, ArrayList<Shape> shapes, ArrayList<Light> lights) {
+        Vector3[] result = new Vector3[5];
+        double[][] positions = getMiddlePoints(squareCenters);
+        for(int i = 0; i < result.length; i++) {
+            double rayX = positions[0][i];
+            double rayY = positions[1][i];
+            Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
+            Ray r = new Ray(camWorldPos, rayDirection, shapes);
+            r.shootRay();
+            if(r.hasIntersected()) {
+                result[i] = r.getShape().getMaterial().getOutputColor(r, lights);
+            }
+            else {
+                result[i] = new Vector3(255, 255,255);
+            }
+        }
+        return result;
     }
 }
