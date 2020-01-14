@@ -46,7 +46,7 @@ public class Camera {
         this.V = U.cross(W).normalize();
     }
 
-    public Vector3 getRayDirection(int x, int y){
+    public Vector3 getRayDirection(double x, double y){
         double s = (Main.HEIGHT / 2.0) / Math.tan(cameraangle / 2.0);
         double left = x - ((Main.WIDTH ) / 2.0);
         double top =  ((Main.HEIGHT) / 2.0) - y;
