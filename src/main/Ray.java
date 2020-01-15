@@ -5,7 +5,11 @@ import main.shapes.Shape;
 import main.util.Intersection;
 import main.util.Vector3;
 
+import java.util.Random;
+
 public class Ray {
+
+    private Random random;
 
     private Vector3 startingPoint;
     private Vector3 rayDirection;
@@ -64,20 +68,20 @@ public class Ray {
 
             if(m.isReflective()){
                 if(m.isTransparent() && this.reflectionRate > 0){
-                    reflectedColor = shootReflectionRay(false);
+                    reflectedColor = shootReflectionRay();
                 }
                 if(!m.isTransparent()){
-                    reflectedColor = shootReflectionRay(false);
+                    reflectedColor = shootReflectionRay();
                 }
             }
 
             outputColor = m.getLocalColor(this, scene.getLights(), reflectedColor, localColor);
 
-            if(!(m.isTransparent())){
+            /*if(!(m.isTransparent())){
                 if(shootShadowRay()){
                     outputColor = outputColor.scalarmultiplication(0);
                 }
-            }
+            }*/
 
             return outputColor;
         }
@@ -112,24 +116,42 @@ public class Ray {
         this.intersection = intersection;
     }
 
-    private boolean shootShadowRay(){
+    private void shootShadowRay(){
         for(Light light : scene.getLights()) {
 
             for(Shape s: scene.getShapes()){
 
                 if(!(s.getMaterial().isTransparent())){
-                    Intersection inter = s.intersect(transposePositionInNormalDirection(true, 0.5), light.getPosition().normalize());
 
-                    if(inter.hasIntersected()){
-                        return true;
+                    Vector3 shadowRayStartPosition = transposePositionInNormalDirection(true, 0.01);
+                    double shadowRayIntensity = 1;
+                    int shadowRayCount = 100;
+                    for(int x = 0; x < shadowRayCount; x++) {
+                        double xCoord = 0, yCoord = 0, zCoord = 0, d = 0;
+                        do {
+                            xCoord = random.nextDouble() * 2.0 - 1.0;
+                            yCoord = random.nextDouble() * 2.0 - 1.0;
+                            zCoord = random.nextDouble() * 2.0 - 1.0;
+                            d = xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
+                        } while (d > 1.0 && xCoord == 0 && yCoord == 0 && zCoord == 0);
+                        Vector3 offset = new Vector3(xCoord, yCoord, zCoord).normalize();
+                        Vector3 shadowRayDirection = light.getPosition().add(offset).normalize();
+
+                        Intersection inter = s.intersect(shadowRayStartPosition, shadowRayDirection);
+
+                        if(inter.hasIntersected()){
+                            shadowRayIntensity -= 1./shadowRayCount;
+                        }
+                    }
+                    if(shadowRayIntensity == 0) { //alle Schattenstrahlen haben ein Obj auf dem Web zum Licht getroffen
+
                     }
                 }
             }
         }
-        return false;
     }
 
-    private Vector3 shootReflectionRay(boolean totalInnerReflection){
+    private Vector3 shootReflectionRay(){
 
         Vector3 output = null;
         Shape shape = getShape();
@@ -203,7 +225,7 @@ public class Ray {
             // Check if angle is too big, if it is reflections occur
             if(b < 0){
                 reflectionRate = 1;
-                output = this.shootReflectionRay(true);
+                output = this.shootReflectionRay();
             }
             else{
                 b = Math.sqrt(b);

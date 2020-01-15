@@ -33,7 +33,7 @@ public class OutputController {
         Matrix4 testTransposed = test.getTransposed();
 
 
-        Camera camera = new Camera(new Vector3(3,0,-7), new Vector3(0,0,0));
+        Camera camera = new Camera(new Vector3(-2,0,-7), new Vector3(0,0,0));
         Material standardMaterial = new Material(new Vector3(1,0,0), 0.1, 0.2);
         Material standardMaterial2 = new Material(new Vector3(1,1,1), 0.1, 0.7);
         Material transparentMaterial1 = new Material(1.3);
@@ -42,14 +42,14 @@ public class OutputController {
         Shape sphere = new Sphere(2, new Vector3(0,0,0) , transparentMaterial1);
         Shape sphere2 = new Sphere(2, new Vector3(0,0, 0) , transparentMaterial1);
         Shape sphere3 = new Sphere(1, new Vector3(0,0, 0) , standardMaterial2);
-        Shape sphere4 = new Sphere(2, new Vector3(0,2,4) , standardMaterial);
+        Shape sphere4 = new Sphere(2, new Vector3(0, 2,4) , standardMaterial);
         //Shape sphere2 = new QuadricSphere(material);
 
-        Quadric zylinder = new Zylinder(1);
+        /*Quadric zylinder = new Zylinder(1);
         Quadric zylinder2 = new CustomQuadric(1,0,1,0,0,0,0,0,0,Math.sqrt(1) * -1, material);
         Differenz v = new Differenz(zylinder2, zylinder);
         Quadric zylinder3 = new CustomQuadric(1,1,0,0,0,0,0,0,0,Math.sqrt(1) * -1, material);
-        Vereinigung v2 = new Vereinigung(v, zylinder3);
+        Vereinigung v2 = new Vereinigung(v, zylinder3);*/
 
 
 

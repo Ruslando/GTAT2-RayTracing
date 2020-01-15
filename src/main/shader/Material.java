@@ -5,7 +5,6 @@ import main.Ray;
 import main.util.Vector3;
 
 import java.util.ArrayList;
-import java.util.Random;
 
 public class Material {
     private Vector3 albedo;
@@ -48,8 +47,6 @@ public class Material {
 
     private Vector3 calculateColorOnRayHit(Ray ray, ArrayList<Light> lights, Vector3 reflectedColor, Vector3 localColor){
 
-        Random r = new Random();
-
         Vector3 outputColor = new Vector3(0,0,0);
         Vector3 intersection = ray.getIntersectionPoint();
         Vector3 normal = ray.getNormal();
@@ -57,37 +54,12 @@ public class Material {
         for(Light light : lights){
             double brightness = light.getBrightness();
             Vector3 lightColor = light.getColorGamma();
-            Vector3 shadowRayStartPosition = intersection.add(normal.scalarmultiplication(0.001));
-            double shadowRayIntensity = 1;
-            int shadowRayCount = 100;
-            for(int x = 0; x < shadowRayCount; x++) {
-                double xCoord = 0, yCoord = 0, zCoord = 0, d = 0;
-                do {
-                    xCoord = r.nextDouble() * 2.0 - 1.0;
-                    yCoord = r.nextDouble() * 2.0 - 1.0;
-                    zCoord = r.nextDouble() * 2.0 - 1.0;
-                    d = xCoord * xCoord + yCoord * yCoord + zCoord * zCoord;
-                } while (d > 1.0 && xCoord == 0 && yCoord == 0 && zCoord == 0);
-                Vector3 offset = new Vector3(xCoord, yCoord, zCoord).normalize();
-                Vector3 shadowRayDirection = light.getPosition().add(offset).normalize();
-                Ray shadowRay = new Ray(shadowRayStartPosition, shadowRayDirection, ray.getShapes());
-                shadowRay.shootRay();
-                if(shadowRay.hasIntersected()) {
-                    shadowRayIntensity -= 1./shadowRayCount;
-                }
-            }
-            if(shadowRayIntensity == 0) { //alle Schattenstrahlen haben ein Obj auf dem Web zum Licht getroffen
 
-            }
-            else {
-                double brightness = light.getBrightness();
-                Vector3 lightColor = light.getRgb().removeGamma();
+            Vector3 V = ray.getRayDirection().scalarmultiplication(-1);
+            Vector3 L = light.getPosition().subtract(intersection).normalize();
+            Vector3 H = V.add(L).scalarmultiplication(0.5).normalize();
 
-                Vector3 V = ray.getRayDirection().scalarmultiplication(-1);
-                Vector3 L = light.getPosition().subtract(intersection).normalize();
-                Vector3 H = V.add(L).scalarmultiplication(0.5).normalize();
-
-                double D = (roughness * roughness) / (Math.PI * Math.pow(((normal.scalar(H) * normal.scalar(H)) * (roughness * roughness - 1) + 1), 2));
+            double D = (roughness * roughness) / (Math.PI * Math.pow(((normal.scalar(H) * normal.scalar(H)) * (roughness * roughness - 1) + 1), 2));
 
             Vector3 F;
             double reflectivity = ray.getReflectionRate();
@@ -103,41 +75,41 @@ public class Material {
             double G = (normal.scalar(V) / ((normal.scalar(V) * (1 - (roughness / 2)) + (roughness / 2)))
                     * (normal.scalar(L) / (normal.scalar(L) * (1 - (roughness / 2)) + (roughness / 2))));
 
-                // Amount of albedo reflected light aka DFG
-                Vector3 ks = F.scalarmultiplication(D * G);
-                // Amount of diffused light
-                Vector3 kd;
-                if(isTransparent){
-                    kd = new Vector3(1,1,1).subtract(F);
-                }
-                else{
-                    kd = new Vector3(1,1,1).subtract(ks).scalarmultiplication(1 - metalness);
-                }
+            // Amount of albedo reflected light aka DFG
+            Vector3 ks = F.scalarmultiplication(D * G);
+            // Amount of diffused light
+            Vector3 kd;
+            if(isTransparent){
+                kd = new Vector3(1,1,1).subtract(F);
+            }
+            else{
+                kd = new Vector3(1,1,1).subtract(ks).scalarmultiplication(1 - metalness);
+            }
 
-                double nl = (normal.scalar(L));
-                // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
+            double nl = (normal.scalar(L));
+            // diffus; localcol * (1-F) bzw. kd + spiegelung: F * reflectedColor + glanzlicht: D*F*G bzw. ks
 
-                if(localColor == null){
-                    localColor = albedo;
-                }
-                if(reflectedColor == null){
-                    reflectedColor = new Vector3(0.7,0.7,0.7);
-                }
+            if(localColor == null){
+                localColor = albedo;
+            }
+            if(reflectedColor == null){
+                reflectedColor = new Vector3(0.7,0.7,0.7);
+            }
 
-                Vector3 diffus = localColor.dotproduct(kd);
-                Vector3 reflect = reflectedColor.dotproduct(F);
+            Vector3 diffus = localColor.dotproduct(kd);
+            Vector3 reflect = reflectedColor.dotproduct(F);
 
-                Vector3 lighting = ks.add(reflect).add(diffus);
-                // lichtfarbe + lichtintensität + NdotL * "lighting"
-                Vector3 output;
-                if(isTransparent){
-                    //output = lightColor.scalarmultiplication(brightness).dotproduct(lighting);
-                    output = lighting.scalarmultiplication(255).removeGamma();
-                }
-                else{
-                    output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);
-                }
-                outputColor = outputColor.add(output);
+            Vector3 lighting = ks.add(reflect).add(diffus);
+            // lichtfarbe + lichtintensität + NdotL * "lighting"
+            Vector3 output;
+            if(isTransparent){
+                //output = lightColor.scalarmultiplication(brightness * 0.7).dotproduct(lighting);
+                output = lighting.scalarmultiplication(255).removeGamma();
+            }
+            else{
+                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);
+            }
+            outputColor = outputColor.add(output);
 
         }
 
