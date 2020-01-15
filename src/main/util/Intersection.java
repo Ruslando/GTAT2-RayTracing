@@ -51,7 +51,7 @@ public class Intersection {
      * @return A double value of the nearest intersection.
      */
     public double getNearestIntersection(){
-
+        // Check into this check
         if(nearestDistance == 0){
             double result = Double.MAX_VALUE;
 

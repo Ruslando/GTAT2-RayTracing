@@ -21,7 +21,7 @@ public class RayTracer {
         for (int i = 0; i < Main.HEIGHT; i++){      //Loop every pixel
             for(int j = 0; j < Main.WIDTH; j++){
 
-                applyAntiAliasing(AntiAliasing.SSAA_SINGLE, i, j);
+                applyAntiAliasing(AntiAliasing.SSAA_NEIGHBOR, i, j);
 
             }
         }
@@ -109,7 +109,7 @@ public class RayTracer {
             Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
             Ray r = new Ray(camWorldPos, rayDirection, scene, 1, maxRecursionStep);
 
-            cornerColors[index] = r.shootRay();
+            cornerColors[index] = r.shootRay().normalizedToColor();
         }
 
         outputColor = supersample(camWorldPos, cornerColors, squareCenters, 0);
@@ -236,7 +236,7 @@ public class RayTracer {
             double rayY = positions[1][i];
             Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
             Ray r = new Ray(camWorldPos, rayDirection, scene,1, maxRecursionStep);
-            result[i] = r.shootRay();
+            result[i] = r.shootRay().normalizedToColor();
         }
         return result;
     }
