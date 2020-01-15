@@ -5,6 +5,7 @@ import main.shapes.Shape;
 import main.util.Intersection;
 import main.util.Vector3;
 
+import java.util.ArrayList;
 import java.util.Random;
 
 public class Ray {
@@ -13,7 +14,9 @@ public class Ray {
 
     private Vector3 startingPoint;
     private Vector3 rayDirection;
-    private Scene scene;
+
+    private ArrayList<Shape> shapes;
+    private ArrayList<Light> lights;
 
     private Intersection intersection;
 
@@ -25,19 +28,15 @@ public class Ray {
     private double reflectionRate;
 
 
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene, int recursionStep, int maxRecursionDepth){
+    public Ray(Vector3 startingPoint, Vector3 raydirection, ArrayList<Shape> shapes, ArrayList<Light> lights, int recursionStep, int maxRecursionDepth){
         this.startingPoint = startingPoint;
         this.rayDirection = raydirection.normalize();
-        this.scene = scene;
+
+        this.shapes = shapes;
+        this.lights = lights;
+
         this.recursionStep = recursionStep;
         this.maxRecursionDepth = maxRecursionDepth;
-        this.currentRefractionIndex = 1;
-    }
-
-    public Ray(Vector3 startingPoint, Vector3 raydirection, Scene scene){
-        this.startingPoint = startingPoint;
-        this.rayDirection = raydirection.normalize();
-        this.scene = scene;
         this.currentRefractionIndex = 1;
     }
 
@@ -75,7 +74,7 @@ public class Ray {
                 }
             }
 
-            outputColor = m.getLocalColor(this, scene.getLights(), reflectedColor, localColor);
+            outputColor = m.getLocalColor(this, lights, reflectedColor, localColor);
 
             /*if(!(m.isTransparent())){
                 if(shootShadowRay()){
@@ -96,7 +95,7 @@ public class Ray {
         /* Loops through every object that is in the scene. Only the intersection that is nearest to the screen
         is drawn onto the canvas. If the ray does not hit anything, the intersection field stays null.
          */
-        for(Shape s: scene.getShapes()){
+        for(Shape s: shapes){
 
             if(!(s.equals(ignoreShape))){
                 Intersection inter = s.intersect(startingPoint, rayDirection);
@@ -117,9 +116,9 @@ public class Ray {
     }
 
     private void shootShadowRay(){
-        for(Light light : scene.getLights()) {
+        for(Light light : lights) {
 
-            for(Shape s: scene.getShapes()){
+            for(Shape s: shapes){
 
                 if(!(s.getMaterial().isTransparent())){
 
@@ -170,7 +169,7 @@ public class Ray {
                 Vector3 normalReversed = getNormal().scalarmultiplication(-1);
                 transposedIntersectionPoint = transposePositionInNormalDirection(false, 0.1);
                 reflectionRayDirection = getRayDirection().subtract((getRayDirection().dotproduct(normalReversed)).dotproduct(normalReversed).scalarmultiplication(2)).normalize();
-                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene ,recursionStep + 1, maxRecursionDepth);
+                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, shapes, lights ,recursionStep + 1, maxRecursionDepth);
                 ray.setCurrentRefractionIndex(currentRefractionIndex);
 
             }   // When ray moves inside of object
@@ -178,7 +177,7 @@ public class Ray {
                 transposedIntersectionPoint = transposePositionInNormalDirection(true, 0.1);
                 reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
                 //reflectionRayDirection = getRayDirection().subtract((getRayDirection().dotproduct(getNormal())).dotproduct(getNormal()).scalarmultiplication(2)).normalize();
-                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, scene ,recursionStep + 1, maxRecursionDepth);
+                ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, shapes, lights ,recursionStep + 1, maxRecursionDepth);
             }
 
             // If the material is not transparent, it will ignore itself in the next ray so that it will not accidently hit itself again.
@@ -251,7 +250,7 @@ public class Ray {
                 }
 
                 // Prepares new refracted ray
-                Ray ray = new Ray(getTransposedPositionInRefractedDirection(v2, 0.05), v2, scene, recursionStep+1, maxRecursionDepth);
+                Ray ray = new Ray(getTransposedPositionInRefractedDirection(v2, 0.05), v2, shapes, lights, recursionStep+1, maxRecursionDepth);
                 ray.setCurrentRefractionIndex(i2);
                 output = ray.shootRay();
             }
@@ -281,7 +280,7 @@ public class Ray {
     }
 
     private double getNextRefractionIndex(){
-        Ray ray = new Ray(transposePositionInNormalDirection(true, 0.1), getRayDirection(), scene);
+        Ray ray = new Ray(transposePositionInNormalDirection(true, 0.1), getRayDirection(), shapes, lights, 1,1);
         ray.shootTraceRay();
 
         // We hit nothing. We assume that it will enter air, thus the refraction index will be one

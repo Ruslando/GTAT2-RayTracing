@@ -1,7 +1,10 @@
 package main;
 
+import main.shapes.Shape;
 import main.util.AntiAliasing;
 import main.util.Vector3;
+
+import java.util.ArrayList;
 
 public class RayTracer {
 
@@ -11,9 +14,16 @@ public class RayTracer {
 
     private static int maxRecursionStep = 6;
 
+    ArrayList<Shape> shapes;
+    ArrayList<Light> lights;
+
     public RayTracer(Camera camera, Scene scene, OutputController output){
         this.camera = camera;
         this.scene = scene;
+
+        this.shapes = scene.getShapes();
+        this.lights = scene.getLights();
+
         this.output = output;
     }
 
@@ -21,7 +31,7 @@ public class RayTracer {
         for (int i = 0; i < Main.HEIGHT; i++){      //Loop every pixel
             for(int j = 0; j < Main.WIDTH; j++){
 
-                applyAntiAliasing(AntiAliasing.SSAA_NEIGHBOR, i, j);
+                applyAntiAliasing(AntiAliasing.NOAA, i, j);
 
             }
         }
@@ -49,7 +59,7 @@ public class RayTracer {
         int argb;
 
         // Creates new ray from camera position to the pixel location of i,j
-        Ray ray = new Ray(camera.getWorldposition(), rayDirection, scene, 1, 6);
+        Ray ray = new Ray(camera.getWorldposition(), rayDirection, shapes, lights, 1, 6);
         // Shoots ray and waits for a Color to return;
         Vector3 outputColor = null;
         outputColor = ray.shootRay();
@@ -66,12 +76,13 @@ public class RayTracer {
     }
 
     private void superSamplingSingle(int i, int j){
+
         Vector3 ray1Direction = camera.getRayDirection(j+0.25, i+0.25);
         Vector3 ray2Direction = camera.getRayDirection(j+0.75, i+0.75);
         int argb;
 
-        Ray ray1 = new Ray(camera.getWorldposition(), ray1Direction, scene, 1, maxRecursionStep);
-        Ray ray2 = new Ray(camera.getWorldposition(), ray2Direction, scene,1 , maxRecursionStep);
+        Ray ray1 = new Ray(camera.getWorldposition(), ray1Direction, shapes, lights, 1, maxRecursionStep);
+        Ray ray2 = new Ray(camera.getWorldposition(), ray2Direction, shapes, lights,1 , maxRecursionStep);
         Vector3 ray1Result = ray1.shootRay().normalizedToColor();
         Vector3 ray2Result = ray2.shootRay().normalizedToColor();
 
@@ -84,7 +95,7 @@ public class RayTracer {
         }
         else {
             Vector3 ray3Direction = camera.getRayDirection(j+0.5, i+0.5);
-            Ray ray3 = new Ray(camera.getWorldposition(), ray3Direction, scene, 1, maxRecursionStep);
+            Ray ray3 = new Ray(camera.getWorldposition(), ray3Direction, shapes, lights, 1, maxRecursionStep);
             Vector3 ray3Result = ray3.shootRay().normalizedToColor();
             outputColor = ray1Result.add(ray2Result).add(ray3Result).scalarmultiplication(1./3.);
         }
@@ -107,7 +118,7 @@ public class RayTracer {
             double rayX = squareCenters[0][index];
             double rayY = squareCenters[1][index];
             Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
-            Ray r = new Ray(camWorldPos, rayDirection, scene, 1, maxRecursionStep);
+            Ray r = new Ray(camWorldPos, rayDirection, scene.getShapes(), scene.getLights(), 1, maxRecursionStep);
 
             cornerColors[index] = r.shootRay().normalizedToColor();
         }
@@ -235,7 +246,7 @@ public class RayTracer {
             double rayX = positions[0][i];
             double rayY = positions[1][i];
             Vector3 rayDirection = camera.getRayDirection(rayX, rayY);
-            Ray r = new Ray(camWorldPos, rayDirection, scene,1, maxRecursionStep);
+            Ray r = new Ray(camWorldPos, rayDirection, shapes, lights,1, maxRecursionStep);
             result[i] = r.shootRay().normalizedToColor();
         }
         return result;
