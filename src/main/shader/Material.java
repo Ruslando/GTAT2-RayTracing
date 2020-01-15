@@ -103,8 +103,8 @@ public class Material {
             // lichtfarbe + lichtintensität + NdotL * "lighting"
             Vector3 output;
             if(isTransparent){
-                //output = lightColor.scalarmultiplication(brightness * 0.7).dotproduct(lighting);
-                output = lighting.scalarmultiplication(255).removeGamma();
+                output = lightColor.scalarmultiplication(brightness * 0.7).dotproduct(lighting);
+                //output = lighting.scalarmultiplication(255).removeGamma();
             }
             else{
                 output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);

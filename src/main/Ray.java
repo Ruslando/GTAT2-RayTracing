@@ -38,6 +38,8 @@ public class Ray {
         this.recursionStep = recursionStep;
         this.maxRecursionDepth = maxRecursionDepth;
         this.currentRefractionIndex = 1;
+
+        random = new Random();
     }
 
     /*
@@ -76,11 +78,9 @@ public class Ray {
 
             outputColor = m.getLocalColor(this, lights, reflectedColor, localColor);
 
-            /*if(!(m.isTransparent())){
-                if(shootShadowRay()){
-                    outputColor = outputColor.scalarmultiplication(0);
-                }
-            }*/
+            if(!(m.isTransparent())){
+                outputColor = outputColor.scalarmultiplication(shootShadowRay());
+            }
 
             return outputColor;
         }
@@ -115,7 +115,11 @@ public class Ray {
         this.intersection = intersection;
     }
 
-    private void shootShadowRay(){
+    private double shootShadowRay(){
+
+        double shadowRayIntensity = 1;
+        int shadowRayCount = 100;
+
         for(Light light : lights) {
 
             for(Shape s: shapes){
@@ -123,8 +127,7 @@ public class Ray {
                 if(!(s.getMaterial().isTransparent())){
 
                     Vector3 shadowRayStartPosition = transposePositionInNormalDirection(true, 0.01);
-                    double shadowRayIntensity = 1;
-                    int shadowRayCount = 100;
+
                     for(int x = 0; x < shadowRayCount; x++) {
                         double xCoord = 0, yCoord = 0, zCoord = 0, d = 0;
                         do {
@@ -148,6 +151,7 @@ public class Ray {
                 }
             }
         }
+        return shadowRayIntensity;
     }
 
     private Vector3 shootReflectionRay(){
