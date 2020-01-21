@@ -172,15 +172,14 @@ public class Ray {
 
                 Vector3 normalReversed = getNormal().scalarmultiplication(-1);
                 transposedIntersectionPoint = transposePositionInNormalDirection(false, 0.1);
-                reflectionRayDirection = getRayDirection().subtract((getRayDirection().dotproduct(normalReversed)).dotproduct(normalReversed).scalarmultiplication(2)).normalize();
+                reflectionRayDirection = getRayDirection().subtract((normalReversed.scalarmultiplication(2*(getRayDirection().scalar(normalReversed)))));
                 ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, shapes, lights ,recursionStep + 1, maxRecursionDepth);
                 ray.setCurrentRefractionIndex(currentRefractionIndex);
 
             }   // When ray moves inside of object
             else{
                 transposedIntersectionPoint = transposePositionInNormalDirection(true, 0.1);
-                reflectionRayDirection = getRayDirection().subtract(getNormal().scalarmultiplication(2).dotproduct(getNormal().dotproduct(getRayDirection()))).normalize();
-                //reflectionRayDirection = getRayDirection().subtract((getRayDirection().dotproduct(getNormal())).dotproduct(getNormal()).scalarmultiplication(2)).normalize();
+                reflectionRayDirection = getRayDirection().subtract((getNormal().scalarmultiplication(2*(getRayDirection().scalar(getNormal())))));
                 ray = new Ray(transposedIntersectionPoint, reflectionRayDirection, shapes, lights ,recursionStep + 1, maxRecursionDepth);
             }
 

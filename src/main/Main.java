@@ -11,6 +11,7 @@ public class Main extends Application {
     public static final int WIDTH = 1280;
     public static final int HEIGHT = 720;
 
+    public static OutputController oc;
 
     @Override
     public void start(Stage primaryStage) throws Exception{

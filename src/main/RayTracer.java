@@ -31,7 +31,7 @@ public class RayTracer {
         for (int i = 0; i < Main.HEIGHT; i++){      //Loop every pixel
             for(int j = 0; j < Main.WIDTH; j++){
 
-                applyAntiAliasing(AntiAliasing.SSAA_NEIGHBOR, i, j);
+                applyAntiAliasing(AntiAliasing.NOAA, i, j);
 
             }
         }

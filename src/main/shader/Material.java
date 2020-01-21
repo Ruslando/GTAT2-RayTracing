@@ -96,18 +96,18 @@ public class Material {
                 reflectedColor = new Vector3(0.7,0.7,0.7);
             }
 
-            Vector3 diffus = localColor.dotproduct(kd);
-            Vector3 reflect = reflectedColor.dotproduct(F);
+            Vector3 diffus = localColor.multiply(kd);
+            Vector3 reflect = reflectedColor.multiply(F);
 
             Vector3 lighting = ks.add(reflect).add(diffus);
             // lichtfarbe + lichtintensität + NdotL * "lighting"
             Vector3 output;
             if(isTransparent){
-                output = lightColor.scalarmultiplication(brightness * 0.7).dotproduct(lighting);
-                //output = lighting.scalarmultiplication(255).removeGamma();
+                //output = lightColor.scalarmultiplication(brightness * 1).dotproduct(lighting);
+                output = lighting.scalarmultiplication(255).removeGamma();
             }
             else{
-                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).dotproduct(lighting);
+                output = lightColor.scalarmultiplication(brightness).scalarmultiplication(nl).multiply(lighting);
             }
             outputColor = outputColor.add(output);
 
